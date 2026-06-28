@@ -1,0 +1,36 @@
+{
+  "name": "course-landing-agent",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "새러데이클럽 쇼핑숏폼 상세페이지 생성 에이전트 (v1)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "export:demo": "tsx scripts/export-page.ts demo",
+    "export:challenge": "tsx scripts/export-page.ts challenge",
+    "export:all": "tsx scripts/export-page.ts demo && tsx scripts/export-page.ts challenge",
+    "thumbs:demo": "tsx scripts/export-thumbnails.ts demo",
+    "thumbs:challenge": "tsx scripts/export-thumbnails.ts challenge",
+    "prompts": "tsx scripts/generate-prompts.ts"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remark": "^15.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "playwright": "^1.49.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  }
+}

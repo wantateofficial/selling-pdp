@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sc-outline: #1a1a24;
+    --sc-face: #f5f3ec;
+    --sc-cream: #f9f1dc;
+    --sc-blue: #4a6fa5;
+    --sc-orange: #ff7a1a;
+    --sc-mint: #4fc3a8;
+    --sc-gray: #f4f5f7;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Pretendard', 'Pretendard Variable', system-ui, sans-serif;
+    color: var(--sc-outline);
+    background: #ffffff;
+    word-break: keep-all;
+    line-height: 1.6;
+  }
+  /* 콘텐츠 보호 활성(body.sc-protected) 시에만 텍스트 선택 차단 (입력 필드 예외) */
+  body.sc-protected {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  body.sc-protected input,
+  body.sc-protected textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  /* 이미지 드래그 저장 차단 */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+  }
+}
+
+@layer components {
+  /* 도트 배경 패턴 */
+  .sc-dotbg {
+    background-image: radial-gradient(var(--sc-blue) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+    opacity: 0.12;
+  }
+
+  /* 카드: 굵은 먹테두리 대신 옅은 선 + 부드러운 그림자로 분리감만 (눈 피로 ↓) */
+  .sc-card {
+    @apply rounded-2xl border border-black/[0.08] bg-white shadow-[0_2px_10px_rgba(26,26,36,0.06)];
+  }
+
+  /* 강조 밑줄 (오렌지 하이라이트) */
+  .sc-underline {
+    background: linear-gradient(transparent 60%, rgba(255, 122, 26, 0.35) 60%);
+  }
+}
+
+/* export(이미지 캡처) 시 미리보기 전용 UI 숨김 */
+body.exporting .no-export {
+  display: none !important;
+}
