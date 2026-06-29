@@ -6,50 +6,147 @@ interface EditMarkerProps {
 }
 
 /**
- * 섹션별 수정 요청 버튼.
- * 미리보기에서만 보이며(.no-export), export 캡처 시 CSS로 숨겨진다.
- * 클릭하면 해당 섹션 수정 프롬프트를 클립보드에 복사하고, "복사됨" 피드백을 띄운다.
+ * 섹션별 "수정 요청" — 클릭 시 모달을 열고, 수정 의견을 DB(구글시트 등)로 전송한다.
+ * 전송 대상: import.meta.env.VITE_FEEDBACK_ENDPOINT (Apps Script 웹앱 URL 등).
+ * 엔드포인트가 없으면 메일 초안(mailto)로 폴백한다.
+ * 미리보기 전용(.no-export) — export 캡처 시 숨김.
  */
-export function EditMarker({ sectionKey, sectionTitle }: EditMarkerProps) {
-  const [copied, setCopied] = useState(false);
+const ENDPOINT = import.meta.env.VITE_FEEDBACK_ENDPOINT as string | undefined;
 
-  const onClick = async () => {
-    const prompt = `아래 섹션은 쇼핑숏폼 상세페이지의 "${sectionTitle}" 섹션입니다.\n\n목표:\n- 초보자가 바로 이해할 수 있게 만들기\n- 신청 전환을 높이기\n- 과장된 수익 보장 표현은 피하기\n\n요청:\n이 섹션을 더 강한 후킹 문구로 바꿔줘. 단, 핵심 사실(날짜/가격/조건)은 유지해줘.`;
+export function EditMarker({ sectionKey, sectionTitle }: EditMarkerProps) {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [msg, setMsg] = useState('');
+  const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+
+  const page = new URLSearchParams(window.location.search).get('page') || 'demo';
+
+  const submit = async () => {
+    if (!msg.trim()) return;
+    const payload = {
+      section: sectionKey,
+      sectionTitle,
+      page,
+      name: name.trim(),
+      message: msg.trim(),
+      url: window.location.href,
+      ts: new Date().toISOString(),
+      ua: navigator.userAgent,
+    };
+
+    if (!ENDPOINT) {
+      // 폴백: 메일 초안
+      const body = encodeURIComponent(
+        `[수정요청] ${sectionTitle} (${page})\n\n요청자: ${payload.name || '-'}\n내용:\n${payload.message}\n\n(${payload.url})`,
+      );
+      window.location.href = `mailto:?subject=${encodeURIComponent(`[상세페이지 수정요청] ${sectionTitle}`)}&body=${body}`;
+      setState('done');
+      return;
+    }
+
+    setState('sending');
     try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(prompt);
-      } else {
-        // 비보안 컨텍스트 폴백
-        const ta = document.createElement('textarea');
-        ta.value = prompt;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      // Apps Script 웹앱은 CORS 응답을 주지 않으므로 no-cors로 fire-and-forget.
+      await fetch(ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      setState('done');
+      setMsg('');
+      setName('');
     } catch {
-      // 클립보드 차단 환경: 최소한 시각 피드백
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setState('error');
     }
   };
 
+  const close = () => {
+    setOpen(false);
+    setState('idle');
+  };
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      data-section={sectionKey}
-      className={`no-export absolute right-3 top-3 z-10 rounded-md border px-2 py-1 text-xs font-semibold shadow-sm transition-colors ${
-        copied
-          ? 'border-sc-mint bg-sc-mint text-white'
-          : 'border-sc-blue bg-white/90 text-sc-blue hover:bg-sc-blue hover:text-white'
-      }`}
-    >
-      {copied ? '✓ 복사됨' : '✎ 수정 요청'}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        data-section={sectionKey}
+        className="no-export absolute right-3 top-3 z-10 rounded-md border border-sc-blue bg-white/90 px-2 py-1 text-xs font-semibold text-sc-blue shadow-sm transition-colors hover:bg-sc-blue hover:text-white"
+      >
+        ✎ 수정 요청
+      </button>
+
+      {open && (
+        <div
+          className="no-export fixed inset-0 z-[9998] flex items-center justify-center bg-black/40 p-4"
+          onClick={close}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {state === 'done' ? (
+              <div className="text-center">
+                <p className="text-2xl">✅</p>
+                <p className="mt-2 font-bold">수정 요청이 전달됐어요</p>
+                <p className="mt-1 text-sm text-sc-outline/60">
+                  검토 후 반영하겠습니다. 감사합니다!
+                </p>
+                <button
+                  onClick={close}
+                  className="mt-5 rounded-lg bg-sc-blue px-5 py-2 text-sm font-bold text-white"
+                >
+                  닫기
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mb-1 flex items-center justify-between">
+                  <span className="text-xs font-bold text-sc-blue">수정 요청</span>
+                  <button onClick={close} className="text-sc-outline/40 hover:text-sc-outline">
+                    ✕
+                  </button>
+                </div>
+                <p className="mb-4 text-lg font-extrabold leading-snug">{sectionTitle} 섹션</p>
+
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="이름 / 역할 (선택)"
+                  className="mb-2 w-full rounded-lg border border-black/15 px-3 py-2 text-sm outline-none focus:border-sc-blue"
+                />
+                <textarea
+                  value={msg}
+                  onChange={(e) => setMsg(e.target.value)}
+                  placeholder="어떻게 바꾸면 좋을지 적어주세요. (예: 이 문구를 ~로, 사진 교체, 순서 변경 등)"
+                  rows={5}
+                  className="w-full resize-none rounded-lg border border-black/15 px-3 py-2 text-sm outline-none focus:border-sc-blue"
+                />
+
+                {state === 'error' && (
+                  <p className="mt-2 text-xs font-semibold text-red-500">
+                    전송에 실패했어요. 잠시 후 다시 시도해 주세요.
+                  </p>
+                )}
+
+                <button
+                  onClick={submit}
+                  disabled={!msg.trim() || state === 'sending'}
+                  className="mt-4 w-full rounded-lg bg-sc-blue py-3 text-sm font-extrabold text-white transition-opacity disabled:opacity-40"
+                >
+                  {state === 'sending' ? '전송 중…' : '수정 요청 보내기'}
+                </button>
+                {!ENDPOINT && (
+                  <p className="mt-2 text-center text-[11px] text-sc-outline/40">
+                    (저장 서버 미설정 — 메일 초안으로 열립니다)
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
