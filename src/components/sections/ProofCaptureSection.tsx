@@ -26,7 +26,7 @@ function ReelMedia({ item }: { item: ProofItem }) {
   );
 }
 
-/** 성과 패널 — 조회수 + 플랫폼별 + 어디서 터졌나 */
+/** 성과 패널 — 조회수 + 플랫폼별(틱톡/인스타) */
 function StatPanel({ item }: { item: ProofItem }) {
   return (
     <div className="flex-1">
@@ -46,13 +46,6 @@ function StatPanel({ item }: { item: ProofItem }) {
           <p className="text-base font-extrabold">{item.insta}</p>
         </div>
       </div>
-
-      <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-sc-orange/15 px-3 py-1 text-sm font-bold text-sc-outline">
-        <span>🔥 어디서 터졌나</span>
-        <span className="text-sc-orange">{item.hotOn}</span>
-      </div>
-
-      <p className="mt-3 leading-relaxed text-sc-outline/80">{item.note}</p>
     </div>
   );
 }
