@@ -1,0 +1,10 @@
+# 프로젝트 관리 마커 (CMMI-lite). 진행률은 PRD/DASHBOARD 체크박스에서 자동 계산.
+oneliner: "쇼핑숏폼 무료 데모강의 + 4주 챌린지 전환 랜딩페이지 (Saturday Club)"
+phase: 배포              # 기획 | 설계 | 구현 | 검증 | 배포
+risk: ""
+next: "전환율 측정·개선"
+pmp: ""
+# 관리 포인트 링크 (link_* → 대시보드 상세에 버튼으로)
+link_demo: "https://saturdayclub-selling-pdp.netlify.app/?page=demo"
+link_challenge: "https://saturdayclub-selling-pdp.netlify.app/?page=challenge"
+link_admin: "https://app.netlify.com/projects/saturdayclub-selling-pdp"

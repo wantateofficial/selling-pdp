@@ -68,7 +68,7 @@ export function Footer() {
 
         <p className="mt-6 text-xs text-sc-outline/45">
           본 페이지의 수치·후기·실적은 사실에 기반하며, 수익이나 구매전환을 보장하지 않습니다.
-          <br />© 2026 새러데이클럽. All rights reserved.
+          <br />© 2026 주식회사 원테이트 (새러데이클럽). All rights reserved.
         </p>
       </div>
     </footer>
