@@ -24,7 +24,7 @@ export const PRICING: PriceTier[] = [
     name: '얼리버드 특가',
     price: '15만원',
     seats: '선착순 20명',
-    condition: '6/29 ~ 7/9 데모강의일까지 신청 · 결제 완료 순',
+    condition: '6/29 ~ 7/18 데모강의일까지 신청 · 결제 완료 순',
     highlight: true,
   },
   {
