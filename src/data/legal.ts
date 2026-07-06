@@ -18,8 +18,8 @@ export const COMPANY_INFO: { label: string; value: string }[] = [
   { label: '통신판매업신고번호', value: '2026-서울동대문-0709' },
   { label: '주소', value: '서울특별시 동대문구 경희대로 26, 317호(회기동, 삼의원창업센터)' },
   { label: '대표전화', value: '010-8112-4635' },
-  { label: '이메일', value: 'contact.wantate@gmail.com' },
-  { label: '개인정보보호책임자', value: '한명수 (contact.wantate@gmail.com)' },
+  { label: '이메일', value: 'contact@wantate.co.kr' },
+  { label: '개인정보보호책임자', value: '한명수 (contact@wantate.co.kr)' },
   { label: '호스팅 제공자', value: 'Netlify, Inc.' },
 ];
 
@@ -229,7 +229,7 @@ export const POLICIES: Policy[] = [
       {
         h: '9. 개인정보 보호책임자 및 권익침해 구제',
         p: [
-          '개인정보 보호책임자: 한명수(대표이사) / 이메일: contact.wantate@gmail.com. 개인정보 관련 문의·불만·피해구제는 위 창구로 접수할 수 있으며, 회사는 지체 없이 답변·처리합니다.',
+          '개인정보 보호책임자: 한명수(대표이사) / 이메일: contact@wantate.co.kr. 개인정보 관련 문의·불만·피해구제는 위 창구로 접수할 수 있으며, 회사는 지체 없이 답변·처리합니다.',
           '아래 기관에 개인정보 침해에 대한 상담·피해구제를 문의할 수 있습니다(회사와 별개 기관).',
           '· 개인정보침해신고센터(한국인터넷진흥원): privacy.kisa.or.kr / 국번없이 118',
           '· 개인정보분쟁조정위원회: www.kopico.go.kr / 1833-6972',
@@ -311,7 +311,7 @@ export const POLICIES: Policy[] = [
       {
         h: '제8조 (환불 신청 절차 및 기한)',
         p: [
-          '접수 채널: 카카오톡 채널 또는 이메일(contact.wantate@gmail.com).',
+          '접수 채널: 카카오톡 채널 또는 이메일(contact@wantate.co.kr).',
           '필수 기재사항: 성함, 연락처, 강의명, 환불 사유(필요 시 증빙자료 첨부).',
           '회사는 접수 후 3영업일 이내에 1차 회신하며, 필요 시 증빙을 추가 요청할 수 있습니다. 증빙 미제출·허위 제출 시 환불이 제한·거부될 수 있습니다.',
           '환불은 원칙적으로 결제 시 사용한 수단으로 처리하며, 카드 승인 취소가 불가한 경우 결제자 본인 명의 계좌로 환급합니다. 카드 취소는 승인사 처리 기준에 따라 영업일이 소요될 수 있으며, 회사는 법령상 환급 기한을 준수합니다.',

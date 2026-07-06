@@ -15,8 +15,8 @@ const SOURCES: Record<PageType, { md: string; slug: string }> = {
 };
 
 const TOGGLE: { key: PageType; label: string }[] = [
-  { key: 'demo', label: '무료 데모 7/9' },
-  { key: 'demo2', label: '무료 데모 7/18' },
+  { key: 'demo', label: '데모1 (7/9)' },
+  { key: 'demo2', label: '데모2 (7/18)' },
   { key: 'challenge', label: '4주 챌린지' },
 ];
 
@@ -36,6 +36,22 @@ export default function App() {
     if (isExport) document.body.classList.add('exporting');
   }, [isExport]);
 
+  // 뒤로/앞으로 가기 시 URL의 ?page 와 화면을 동기화.
+  useEffect(() => {
+    const sync = () => setPage(getInitialPage());
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
+
+  // 미리보기 탭 클릭 → URL(?page=)을 바꾸고 화면 전환. (탭이 곧 공유 가능한 주소)
+  const goTo = (key: PageType) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', key);
+    url.hash = '';
+    window.history.pushState({}, '', url);
+    setPage(key);
+  };
+
   const data = useMemo(() => {
     const src = SOURCES[page];
     return normalizeCourseData(src.md, src.slug);
@@ -50,7 +66,7 @@ export default function App() {
           {TOGGLE.map((t) => (
             <button
               key={t.key}
-              onClick={() => setPage(t.key)}
+              onClick={() => goTo(t.key)}
               className={`rounded-md border-2 border-sc-outline px-3 py-1 text-sm font-bold ${
                 page === t.key ? 'bg-sc-blue text-white' : 'bg-white text-sc-outline'
               }`}

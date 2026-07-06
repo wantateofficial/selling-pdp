@@ -99,4 +99,4 @@ demo
 
 ## 링크
 - 신청폼: #signup
-- 카카오톡: #
+- 카카오톡: https://open.kakao.com/o/pnMAwYmi

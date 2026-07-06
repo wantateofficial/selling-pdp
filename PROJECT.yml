@@ -6,5 +6,12 @@ next: "전환율 측정·개선"
 pmp: ""
 # 관리 포인트 링크 (link_* → 대시보드 상세에 버튼으로)
 link_demo: "https://saturdayclub-selling-pdp.netlify.app/?page=demo"
+link_demo2: "https://saturdayclub-selling-pdp.netlify.app/?page=demo2"
 link_challenge: "https://saturdayclub-selling-pdp.netlify.app/?page=challenge"
 link_admin: "https://app.netlify.com/projects/saturdayclub-selling-pdp"
+
+# 분류 (taxonomy 4축) — docs/taxonomy.md
+ai_type: 비AI
+product_form: SaaS
+domain: 커머스
+target: B2C
