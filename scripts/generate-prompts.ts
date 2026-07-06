@@ -10,6 +10,7 @@ import type { CourseData, PageType } from '../src/types';
  */
 const SOURCES: Record<PageType, string> = {
   demo: 'content/shopping-shorts-demo.md',
+  demo2: 'content/shopping-shorts-demo-0718.md',
   challenge: 'content/shopping-shorts-challenge.md',
 };
 

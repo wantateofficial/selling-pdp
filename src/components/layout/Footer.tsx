@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { COMPANY_INFO, POLICIES } from '../../data/legal';
 
 /** 페이지 최하단 푸터 — 전자상거래법 사업자정보 + 필수 정책(환불·개인정보·약관) */
 export function Footer() {
   const [open, setOpen] = useState<string | null>(null);
+
+  // 신청 폼의 동의 문구(#policy-terms 등)나 직접 진입 시 해당 정책을 펼치고 스크롤.
+  useEffect(() => {
+    const openFromHash = () => {
+      const m = window.location.hash.match(/^#policy-(\w+)/);
+      if (!m) return;
+      const id = m[1];
+      if (!POLICIES.some((p) => p.id === id)) return;
+      setOpen(id);
+      requestAnimationFrame(() => {
+        document.getElementById(`policy-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    };
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
 
   return (
     <footer className="border-t border-black/10 bg-sc-gray px-6 py-10 text-sc-outline/80">
@@ -13,7 +30,7 @@ export function Footer() {
           {POLICIES.map((pol) => {
             const isOpen = open === pol.id;
             return (
-              <div key={pol.id}>
+              <div key={pol.id} id={`policy-${pol.id}`} className="scroll-mt-4">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : pol.id)}

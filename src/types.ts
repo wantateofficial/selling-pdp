@@ -1,4 +1,5 @@
-export type PageType = 'demo' | 'challenge';
+/** 라우팅 키 겸 템플릿 구분. demo·demo2는 같은 데모 템플릿(날짜만 다름), challenge는 챌린지 템플릿. */
+export type PageType = 'demo' | 'demo2' | 'challenge';
 
 export interface CurriculumItem {
   /** 주차 라벨 (challenge: "1주차"), demo는 비움 */
