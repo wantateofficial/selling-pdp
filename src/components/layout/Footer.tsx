@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { COMPANY_INFO, POLICIES } from '../../data/legal';
+import { COPYRIGHT } from '../../brand/identity';
 
 /** 페이지 최하단 푸터 — 전자상거래법 사업자정보 + 필수 정책(환불·개인정보·약관) */
 export function Footer() {
@@ -85,7 +86,7 @@ export function Footer() {
 
         <p className="mt-6 text-xs text-sc-outline/45">
           본 페이지의 수치·후기·실적은 사실에 기반하며, 수익이나 구매전환을 보장하지 않습니다.
-          <br />© 2026 주식회사 원테이트 (새러데이클럽). All rights reserved.
+          <br />{COPYRIGHT}
         </p>
       </div>
     </footer>

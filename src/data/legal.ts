@@ -9,17 +9,19 @@
  * 사업자정보는 주식회사 원테이트 실제 값. 최종본은 법률 검토 후 확정 권장.
  */
 
-/** 전자상거래법 제10조·제13조 사업자 표시 의무 항목 */
+import { BRAND } from '../brand/identity';
+
+/** 전자상거래법 제10조·제13조 사업자 표시 의무 항목. 서비스명·상호·이메일은 BRAND에서 상속. */
 export const COMPANY_INFO: { label: string; value: string }[] = [
-  { label: '서비스명', value: '새러데이클럽' },
-  { label: '상호(법인명)', value: '주식회사 원테이트' },
+  { label: '서비스명', value: BRAND.name },
+  { label: '상호(법인명)', value: BRAND.legalName },
   { label: '대표자', value: '한명수' },
   { label: '사업자등록번호', value: '469-81-03938' },
   { label: '통신판매업신고번호', value: '2026-서울동대문-0709' },
   { label: '주소', value: '서울특별시 동대문구 경희대로 26, 317호(회기동, 삼의원창업센터)' },
   { label: '대표전화', value: '010-8112-4635' },
-  { label: '이메일', value: 'contact@wantate.co.kr' },
-  { label: '개인정보보호책임자', value: '한명수 (contact@wantate.co.kr)' },
+  { label: '이메일', value: BRAND.email },
+  { label: '개인정보보호책임자', value: `한명수 (${BRAND.email})` },
   { label: '호스팅 제공자', value: 'Netlify, Inc.' },
 ];
 

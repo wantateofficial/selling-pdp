@@ -1,6 +1,7 @@
 import { Section } from '../layout/Section';
 import { PixelRobot } from '../brand/PixelRobot';
 import { COMPANY_STATS } from '../../data/company';
+import { BRAND } from '../../brand/identity';
 
 /** Section 02. Stat Proof — Hero 직후 회사 누적 숫자로 "진짜 한다"를 증명 */
 export function StatProofSection() {
@@ -8,7 +9,7 @@ export function StatProofSection() {
     <Section
       sectionKey="stat-proof"
       eyebrow="BY THE NUMBERS"
-      title="숫자로 보는 새러데이클럽"
+      title={`숫자로 보는 ${BRAND.name}`}
       bg="white"
     >
       <div className="grid gap-4 sm:grid-cols-3">
