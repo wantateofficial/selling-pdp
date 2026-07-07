@@ -77,7 +77,7 @@ export function SignupForm({ data }: Props) {
           카카오톡 단톡방 입장하기 →
         </a>
         {!kakao && (
-          <p className="mt-2 text-[11px] text-sc-outline/40">(단톡방 링크 준비 중 — 곧 안내드려요)</p>
+          <p className="mt-2 text-[11px] text-sc-outline/40">(단톡방 링크 준비 중이에요. 곧 안내드릴게요)</p>
         )}
       </div>
     );

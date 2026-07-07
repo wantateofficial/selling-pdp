@@ -65,7 +65,7 @@ export function EvaluationSection() {
           <span className="w-12 shrink-0 text-center text-xl font-extrabold text-sc-blue">
             {TOTAL}
           </span>
-          <p className="font-extrabold">합계 — 상위 10% 선정</p>
+          <p className="font-extrabold">합계 · 상위 10% 선정</p>
         </div>
       </div>
 

@@ -147,7 +147,7 @@ export function EditMarker({ sectionKey, sectionTitle }: EditMarkerProps) {
                 </button>
                 {!ENDPOINT && (
                   <p className="mt-2 text-center text-[11px] text-sc-outline/40">
-                    (저장 서버 미설정 — 메일 초안으로 열립니다)
+                    (저장 서버 미설정, 메일 초안으로 열립니다)
                   </p>
                 )}
               </>
