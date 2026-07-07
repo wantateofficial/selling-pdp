@@ -28,9 +28,9 @@ export const TRACK_RECORD: TrackRecordItem[] = [
   { period: '2026 상반기', points: ['AX 강의 수강생 544명 운영', '기업 AX 전환 프로젝트 2건 수행'] },
 ];
 
-/** 강사 프로필 (닉네임 전환 예정 — 현재 본명, TODO: 닉네임으로 교체) */
+/** 강사 프로필 (활동명/닉네임 기준) */
 export const INSTRUCTOR = {
-  name: '송현진',
+  name: '이루다',
   title: '前 창업부트캠프 총괄 PM',
   cardImage: '/assets/instructor/processed/card-bust.jpg',
   bannerImage: '/assets/instructor/processed/banner.jpg',
