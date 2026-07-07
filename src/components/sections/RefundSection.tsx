@@ -1,13 +1,14 @@
 import { Section } from '../layout/Section';
-import { REFUND_TABLE } from '../../data/challenge';
+import { REFUND_TABLE, REFUND_INTRO } from '../../data/challenge';
 
 /**
- * Section (challenge). Refund — 본문에서는 '날짜 기준' 환불 표만 간략히.
+ * Section (challenge). Refund — 학원법 기준 안내(REFUND_INTRO) + 경과율 환불 표.
  * 상세 환불규정 전문은 페이지 하단 Footer 의 '환불규정'에 둔다.
  */
 export function RefundSection() {
   return (
-    <Section sectionKey="refund" eyebrow="REFUND" title="환불은 날짜 기준으로 명확하게" bg="cream">
+    <Section sectionKey="refund" eyebrow="REFUND" title="환불 규정은 학원법 기준으로" bg="cream">
+      <p className="mb-5 max-w-2xl leading-relaxed text-sc-outline/75">{REFUND_INTRO}</p>
       <div className="overflow-hidden sc-card">
         {REFUND_TABLE.map((r) => (
           <div
