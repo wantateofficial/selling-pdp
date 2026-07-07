@@ -1,6 +1,7 @@
 import { Section } from '../layout/Section';
 import {
   EVALUATION,
+  EVAL_PHILOSOPHY,
   TRANSFER_NOTE,
   FAIRNESS_NOTE,
   ANTI_FRAUD_NOTE,
@@ -18,9 +19,19 @@ export function EvaluationSection() {
       title="순위는 이렇게, 사전에 공개된 기준으로"
       bg="white"
     >
+      {/* 평가 철학 — '과정 중심' 진정성 강조 */}
+      <div className="mb-6 flex gap-3 rounded-xl border-2 border-sc-outline bg-sc-cream p-5 shadow-pixel-sm">
+        <span className="shrink-0 text-2xl" aria-hidden>
+          ❤️
+        </span>
+        <p className="text-[15px] font-semibold leading-relaxed text-sc-outline">
+          {EVAL_PHILOSOPHY}
+        </p>
+      </div>
+
       <p className="mb-6 max-w-2xl text-sc-outline/75">
-        선착순이나 추첨이 아니에요. 아래 6가지 항목을 점수로 합산해 전체 순위를 정하고,
-        4주를 끝까지 완주한 분들 중 상위 10%를 성적우수 리워드 대상으로 선정합니다.
+        선착순이나 추첨이 아니에요. 아래 항목을 점수로 합산해 전체 순위를 정하고, 4주를 끝까지
+        완주한 분들 중 상위 10%를 성적우수 리워드 대상으로 선정합니다.
       </p>
 
       {/* 평가표 */}
@@ -40,7 +51,12 @@ export function EvaluationSection() {
               {e.points}
             </span>
             <div>
-              <p className="font-bold">{e.item}</p>
+              <p className="font-bold">
+                <span className="mr-1.5" aria-hidden>
+                  {e.icon}
+                </span>
+                {e.item}
+              </p>
               <p className="text-sm text-sc-outline/65">{e.desc}</p>
             </div>
           </div>
