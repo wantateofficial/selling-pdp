@@ -1,0 +1,22 @@
+# Netlify 빌드/배포 설정.
+# GitHub 저장소를 Netlify에 연결하면 push 시 이 설정으로 자동 빌드·배포된다.
+#   - master 브랜치  → 프로덕션(라이브)  : saturdayclub-selling-pdp.netlify.app
+#   - staging 브랜치 → 스테이징(브랜치 배포): staging--saturdayclub-selling-pdp.netlify.app
+# 흐름: staging에 push → 스테이징 자동배포 → 테스트 → master로 승격 → 라이브 자동배포.
+#
+# ⚠️ VITE_SIGNUP_ENDPOINT 는 여기(커밋되는 파일)에 넣지 말 것.
+#    Netlify UI → Environment variables 에 등록해야 Git 빌드에서 폼 저장이 작동한다.
+#    (Vite는 VITE_* 를 빌드 시점에 굽는다.)
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA — 쿼리스트링(?page=) 기반이라 경로 라우팅은 없지만, 안전하게 index.html 폴백.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
