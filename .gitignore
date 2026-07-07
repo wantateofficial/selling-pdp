@@ -40,3 +40,4 @@ dist/
 # Playwright/preview temp
 .playwright-mcp/
 signup-form.png
+!.env.production

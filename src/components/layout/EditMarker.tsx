@@ -10,8 +10,13 @@ interface EditMarkerProps {
  * 전송 대상: import.meta.env.VITE_FEEDBACK_ENDPOINT (Apps Script 웹앱 URL 등).
  * 엔드포인트가 없으면 메일 초안(mailto)로 폴백한다.
  * 미리보기 전용(.no-export) — export 캡처 시 숨김.
+ *
+ * 노출 정책: 기본 ON(스테이징·개발·미리보기). 프로덕션(라이브)에서만 OFF.
+ *   → 빌드 시 VITE_SHOW_EDIT_REQUEST='false' 이면 아예 렌더하지 않는다.
+ *   프로덕션 빌드는 .env.production 에서 false로 고정(§netlify.toml 컨텍스트별 빌드).
  */
 const ENDPOINT = import.meta.env.VITE_FEEDBACK_ENDPOINT as string | undefined;
+const SHOW_EDIT = import.meta.env.VITE_SHOW_EDIT_REQUEST !== 'false';
 
 export function EditMarker({ sectionKey, sectionTitle }: EditMarkerProps) {
   const [open, setOpen] = useState(false);
@@ -65,6 +70,9 @@ export function EditMarker({ sectionKey, sectionTitle }: EditMarkerProps) {
     setOpen(false);
     setState('idle');
   };
+
+  // 라이브(프로덕션)에서는 수정요청 UI를 렌더하지 않는다. (훅 호출 이후에 가드 — 훅 순서 유지)
+  if (!SHOW_EDIT) return null;
 
   return (
     <>
