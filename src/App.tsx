@@ -20,6 +20,11 @@ const TOGGLE: { key: PageType; label: string }[] = [
   { key: 'challenge', label: '4주 챌린지' },
 ];
 
+// 미리보기 전용 UI(페이지 토글)는 스테이징/개발에서만 노출, 라이브(프로덕션)에선 숨김.
+// (프로덕션 빌드는 .env.production 의 VITE_SHOW_EDIT_REQUEST=false)
+// → 라이브에선 각 날짜 페이지가 독립적이라 방문자가 다른 날짜로 바꿔치기 못 함.
+const PREVIEW_UI = import.meta.env.VITE_SHOW_EDIT_REQUEST !== 'false';
+
 function getInitialPage(): PageType {
   const p = new URLSearchParams(window.location.search).get('page');
   if (p === 'challenge') return 'challenge';
@@ -60,7 +65,7 @@ export default function App() {
   return (
     <>
       <ContentProtection enabled={!isExport} />
-      {!isExport && (
+      {!isExport && PREVIEW_UI && (
         <div className="no-export sticky top-0 z-50 flex items-center justify-center gap-2 border-b-2 border-sc-outline bg-white px-4 py-2">
           <span className="text-sm font-bold">미리보기:</span>
           {TOGGLE.map((t) => (
