@@ -120,5 +120,5 @@ challenge
 - 플랫폼·광고·제휴 링크 정책은 반드시 지켜야 합니다.
 
 ## 링크
-- 신청폼: #
+- 신청폼: https://forms.gle/Jy9HHuG9kgrRbmJy9
 - 카카오톡: #
