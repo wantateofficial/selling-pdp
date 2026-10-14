@@ -4,7 +4,6 @@ import { INSTRUCTOR } from '../../data/company';
 import {
   CHAT_REVIEWS,
   FEEDBACK_SHOTS,
-  ACCOUNT_CHANGE,
   REVIEW_DISCLAIMER,
   REVIEWS_CONSENT_CONFIRMED,
   type ChatReview,
@@ -65,13 +64,11 @@ function SubHeading({ children }: { children: string }) {
 /**
  * Section. Student Reviews — 1기 수강생 후기 (2기 페이지 전용).
  * 강사 실적(ProofCaptureSection) 바로 뒤에서 "수강생도 해냈다"를 보여준다.
- * 큰 수익보다 실행 과정(첫 업로드·피드백·계정 변화) 중심으로 구성한다.
+ * 큰 수익보다 실행 과정(첫 업로드·피드백) 중심으로 구성한다.
  */
 export function ReviewSection() {
   if (CHAT_REVIEWS.length === 0) return null;
   if (!REVIEWS_CONSENT_CONFIRMED && !IS_PREVIEW) return null;
-
-  const { before, after } = ACCOUNT_CHANGE;
 
   return (
     <Section
@@ -116,34 +113,6 @@ export function ReviewSection() {
               <p className="font-extrabold text-sc-blue">{f.title}</p>
               <p className="mt-1 text-sm text-sc-outline/75">{f.desc}</p>
             </figcaption>
-          </figure>
-        ))}
-      </div>
-
-      <SubHeading>0에서 시작한 계정이 일주일 남짓 만에</SubHeading>
-      <div className="grid grid-cols-2 gap-3 sm:gap-4">
-        {[before, after].map((s, i) => (
-          <figure key={s.label} className="overflow-hidden sc-card">
-            <figcaption className="p-3 sm:p-4">
-              <span
-                className={`inline-block rounded-md px-2.5 py-1 text-xs font-extrabold ${
-                  i === 0 ? 'bg-sc-gray text-sc-outline' : 'bg-sc-orange text-white'
-                }`}
-              >
-                {s.label}
-              </span>
-              <ul className="mt-2 space-y-0.5 text-sm font-semibold">
-                {s.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </figcaption>
-            <img
-              src={s.image}
-              alt={`1기 수강생 인스타그램 계정 (${s.label})`}
-              className="block w-full border-t border-black/[0.06]"
-              loading="lazy"
-            />
           </figure>
         ))}
       </div>

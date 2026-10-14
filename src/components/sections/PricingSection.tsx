@@ -1,19 +1,19 @@
 import { Section } from '../layout/Section';
-import { PRICING, PRICING_NOTE } from '../../data/challenge';
+import type { PricingPlan } from '../../data/challenge';
 
-/** Section (challenge). Pricing — 1기 한정 특별가 3구간 (할인율 % 비노출, 금액·인원 위주) */
-export function PricingSection() {
+/** Section (challenge). Pricing — 기수 한정 특별가 3구간 (할인율 % 비노출, 금액·인원 위주) */
+export function PricingSection({ plan }: { plan: PricingPlan }) {
   return (
     <Section
       sectionKey="pricing"
-      eyebrow="1기 한정 특별가"
-      title="첫 챌린지, 지금이 가장 좋은 가격"
+      eyebrow={`${plan.cohort} 한정 특별가`}
+      title={plan.title}
       bg="white"
     >
-      <p className="mb-6 max-w-2xl text-sc-outline/75">{PRICING_NOTE}</p>
+      <p className="mb-6 max-w-2xl text-sc-outline/75">{plan.note}</p>
 
       <div className="grid gap-4 md:grid-cols-3">
-        {PRICING.map((t) => (
+        {plan.tiers.map((t) => (
           <div
             key={t.name}
             className={`sc-card flex flex-col p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-pixel-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${
@@ -33,9 +33,7 @@ export function PricingSection() {
         ))}
       </div>
 
-      <p className="mt-4 text-xs text-sc-outline/45">
-        ※ 가격과 인원은 1기에 한정되며, 결제 완료 순으로 마감됩니다. 정규 오픈 예정가는 50만원입니다.
-      </p>
+      <p className="mt-4 text-xs text-sc-outline/45">{plan.footnote}</p>
     </Section>
   );
 }

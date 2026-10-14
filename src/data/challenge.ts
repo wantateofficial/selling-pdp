@@ -9,7 +9,7 @@
  *  - PRD §16: 수익/구매전환 "보장" 표현 금지.
  */
 
-/** 가격 구간 (1기 한정 특별가, 총 50명 정원, 결제 완료 순 마감) */
+/** 가격 구간 (기수 한정 특별가, 총 50명 정원, 결제 완료 순 마감) */
 export interface PriceTier {
   name: string;
   price: string;
@@ -19,30 +19,40 @@ export interface PriceTier {
   highlight?: boolean;
 }
 
-export const PRICING: PriceTier[] = [
-  {
-    name: '얼리버드 특가',
-    price: '15만원',
-    seats: '선착순 20명',
-    condition: '6/29 ~ 7/18 데모강의일까지 신청 · 결제 완료 순',
-    highlight: true,
-  },
-  {
-    name: '2차 특가',
-    price: '25만원',
-    seats: '20명',
-    condition: '얼리버드 마감 후',
-  },
-  {
-    name: '일반 특가',
-    price: '35만원',
-    seats: '잔여 10명',
-    condition: '2차 마감 후 (총 50명 정원)',
-  },
-];
+/** 기수별 가격표. 콘텐츠 md 의 `기수` 값으로 고른다 (기수가 없으면 1기). */
+export interface PricingPlan {
+  cohort: string;
+  title: string;
+  tiers: PriceTier[];
+  note: string;
+  footnote: string;
+}
 
-export const PRICING_NOTE =
-  '정규 오픈 예정가 50만원 과정입니다. 첫 기수에 한해 특별가로 모셔요. 총 50명 정원이며, 인원은 결제 완료 순으로 마감됩니다.';
+/** 1기·2기 공통 3구간 구조 (얼리버드 20명 / 2차 20명 / 일반 10명) */
+function threeTiers(earlyCondition: string): PriceTier[] {
+  return [
+    { name: '얼리버드 특가', price: '15만원', seats: '선착순 20명', condition: earlyCondition, highlight: true },
+    { name: '2차 특가', price: '25만원', seats: '20명', condition: '얼리버드 마감 후' },
+    { name: '일반 특가', price: '35만원', seats: '잔여 10명', condition: '2차 마감 후 (총 50명 정원)' },
+  ];
+}
+
+export const PRICING_PLANS: Record<string, PricingPlan> = {
+  '1기': {
+    cohort: '1기',
+    title: '첫 챌린지, 지금이 가장 좋은 가격',
+    tiers: threeTiers('6/29 ~ 7/18 데모강의일까지 신청 · 결제 완료 순'),
+    note: '정규 오픈 예정가 50만원 과정입니다. 첫 기수에 한해 특별가로 모셔요. 총 50명 정원이며, 인원은 결제 완료 순으로 마감됩니다.',
+    footnote: '※ 가격과 인원은 1기에 한정되며, 결제 완료 순으로 마감됩니다. 정규 오픈 예정가는 50만원입니다.',
+  },
+  '2기': {
+    cohort: '2기',
+    title: '2기도 지금이 가장 좋은 가격',
+    tiers: threeTiers('10/24 데모강의일까지 신청 · 결제 완료 순'),
+    note: '정규 오픈 예정가 60만원 과정입니다. 2기에 한해 특별가로 모셔요. 총 50명 정원이며, 인원은 결제 완료 순으로 마감됩니다.',
+    footnote: '※ 가격과 인원은 2기에 한정되며, 결제 완료 순으로 마감됩니다. 정규 오픈 예정가는 60만원입니다.',
+  },
+};
 
 /** 성적우수 리워드 (4주를 끝까지 완주한 상위 10%, 1인당 10만원) */
 export const REWARD = {
