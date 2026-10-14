@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import type { CourseData } from '../../types';
+import { resolveSignupEndpoint } from '../../data/signup';
 
 /**
  * 무료 데모 신청 폼 — 회원가입 없이 이름·연락처만 받아 접수한다.
- * 접수 흐름: 폼 제출 → VITE_SIGNUP_ENDPOINT(구글 Apps Script 웹앱=DB)로 전송 →
+ * 접수 흐름: 폼 제출 → 신청 저장 주소(src/data/signup.ts, 구글 Apps Script 웹앱=DB)로 전송 →
  *            성공 시 카카오톡 단톡방 입장 버튼 노출.
  * 엔드포인트가 없으면(개발/미설정) 로컬에서 성공 처리해 흐름만 확인한다.
  */
-const ENDPOINT = import.meta.env.VITE_SIGNUP_ENDPOINT as string | undefined;
-
 interface Props {
   data: CourseData;
 }
@@ -23,6 +22,7 @@ export function SignupForm({ data }: Props) {
   const [phone, setPhone] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
 
+  const ENDPOINT = resolveSignupEndpoint(data.links.signupEndpoint);
   const kakao = data.links.kakao && data.links.kakao !== '#' ? data.links.kakao : '';
   const canSubmit = name.trim().length >= 2 && isValidPhone(phone) && state !== 'sending';
 
@@ -33,6 +33,8 @@ export function SignupForm({ data }: Props) {
       phone: phone.trim(),
       page: new URLSearchParams(window.location.search).get('page') || 'demo',
       course: data.title,
+      // 값이 있으면 백엔드(signup.gs)가 "{값} 신청자" 탭에 따로 쌓는다.
+      cohort: data.basics.signupTab ?? data.basics.cohort ?? '',
       date: `${data.basics.date ?? ''} ${data.basics.time ?? ''}`.trim(),
       url: window.location.href,
       ts: new Date().toISOString(),

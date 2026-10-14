@@ -37,8 +37,12 @@ export function CurriculumSection({ data }: Props) {
           return (
             <div key={i} className="sc-card p-5">
               <div className="mb-3 flex flex-wrap items-center gap-2">
-                <span className="rounded-lg bg-sc-blue px-2.5 py-1 text-sm font-extrabold text-white">
-                  {item.label.replace('주차', '')}주차
+                <span
+                  className={`rounded-lg px-2.5 py-1 text-sm font-extrabold text-white ${
+                    item.label.includes('주차') ? 'bg-sc-blue' : 'bg-sc-orange'
+                  }`}
+                >
+                  {item.label}
                 </span>
                 {item.title && <span className="text-lg font-extrabold">{item.title}</span>}
                 {item.date && (

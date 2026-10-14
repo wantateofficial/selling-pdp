@@ -10,8 +10,8 @@
    - `src/App.tsx` → `SOURCES`(md+slug), `TOGGLE`(미리보기 탭 라벨)
    - `scripts/generate-prompts.ts` → `SOURCES`
 
-> 데모 계열은 `demo`/`demo2`처럼 `DemoLanding`으로, `challenge`는 `ChallengeLanding`으로 렌더된다.
-> (App.tsx: `page === 'challenge' ? ChallengeLanding : DemoLanding`)
+> 템플릿은 라우팅 키가 아니라 마크다운의 `## 페이지 타입`으로 정한다. `demo`면 `DemoLanding`, `challenge`면 `ChallengeLanding`.
+> (App.tsx: `data.pageType === 'challenge' ? ChallengeLanding : DemoLanding`)
 
 ## 섹션 → 필드 매핑
 | 마크다운 섹션 | CourseData 필드 | 비고 |
@@ -33,11 +33,14 @@
 | `## 신청 방법` | `howToJoin` | |
 | `## FAQ` | `faq` | `### 질문` + 다음 줄 답변 |
 | `## 유의사항` | `notice` | Final CTA 하단 |
-| `## 링크` | `links` | `신청폼:` → `apply`, `카카오톡:` → `kakao` |
+| `## 링크` | `links` | `신청폼:` → `apply`, `카카오톡:` → `kakao`, `신청 저장:` → `signupEndpoint`(선택, 이 페이지만 다른 시트로 받을 때) |
 
 ### `## 기본 정보` 라벨
 `강의일`/`시작일`→`date`, `시간`→`time`, `진행 방식`/`방식`→`format`, `가격`→`price`,
-`신청 방식`→`method`, `기간`→`duration`, `운영 구조`→`groupStructure`, `CTA`→`cta`
+`신청 방식`→`method`, `기간`→`duration`, `운영 구조`→`groupStructure`, `CTA`→`cta`,
+`기수`→`cohort`(2기부터 1기 수강생 후기 섹션 노출), `혜택`→`perk`(Hero 칩 한 줄 혜택), `혜택 제목`→`benefitTitle`(demo 혜택 섹션 제목), `신청 탭`→`signupTab`(신청자 시트 탭 이름, 없으면 `기수`)
+
+신청자 저장 주소 기본값은 `src/data/signup.ts` 의 `SIGNUP_ENDPOINT` 에 있다.
 
 ### 커리큘럼(challenge) 주차 형식
 ```

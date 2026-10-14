@@ -26,7 +26,7 @@ export function StatProofSection() {
       <div className="mt-6 flex items-center justify-center gap-3">
         <PixelRobot expression="surprised" size={64} />
         <p className="text-sm font-semibold text-sc-outline/70">
-          이미 1,600명 넘는 분들과 함께 AX·부업 교육을 운영해 왔습니다.
+          이미 2,400명 넘는 분들과 함께 AX·부업 교육을 운영해 왔습니다.
         </p>
       </div>
     </Section>

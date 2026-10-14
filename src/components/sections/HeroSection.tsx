@@ -18,6 +18,7 @@ export function HeroSection({ data }: Props) {
     basics.format && `💻 ${basics.format}`,
     basics.price && `💸 ${basics.price}`,
     basics.groupStructure && `👥 ${basics.groupStructure}`,
+    basics.perk && `🎁 ${basics.perk}`,
   ].filter(Boolean) as string[];
 
   return (
@@ -28,9 +29,16 @@ export function HeroSection({ data }: Props) {
         <SaturdayClubLogo className="mb-8" />
 
         <div>
-          <p className="mb-4 inline-block rounded-full border-2 border-sc-outline bg-white px-3 py-1 text-sm font-bold text-sc-blue">
-            {data.pageType === 'demo' ? '무료 데모강의' : '4주 실전 챌린지'}
-          </p>
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {basics.cohort && (
+              <span className="rounded-full border-2 border-sc-outline bg-sc-orange px-3 py-1 text-sm font-extrabold text-white shadow-pixel-sm">
+                {basics.cohort} 모집
+              </span>
+            )}
+            <span className="rounded-full border-2 border-sc-outline bg-white px-3 py-1 text-sm font-bold text-sc-blue">
+              {data.pageType === 'demo' ? '무료 데모강의' : '4주 실전 챌린지'}
+            </span>
+          </div>
           <h1 className="mb-5 text-[34px] font-extrabold leading-[1.25] tracking-tight">
             {data.title}
           </h1>

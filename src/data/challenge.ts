@@ -99,9 +99,11 @@ export const EVALUATION: EvalCriterion[] = [
   },
 ];
 
-/** 구매전환을 넓게 인정한다는 고지 (첫 기수, 초보자 배려) */
-export const TRANSFER_NOTE =
-  '구매전환은 실제 구매뿐 아니라 상담 신청, 문의, 장바구니, 신청 링크 클릭처럼 미리 정해둔 행동을 기준으로 넓게 인정해요. 첫 기수라 초보자도 충분히 도전할 수 있게 잡았습니다.';
+/** 구매전환을 넓게 인정한다는 고지 (초보자 배려). 1기는 '첫 기수라' 문구가 붙는다. */
+const TRANSFER_BASE =
+  '구매전환은 실제 구매뿐 아니라 상담 신청, 문의, 장바구니, 신청 링크 클릭처럼 미리 정해둔 행동을 기준으로 넓게 인정해요.';
+export const TRANSFER_NOTE = `${TRANSFER_BASE} 첫 기수라 초보자도 충분히 도전할 수 있게 잡았습니다.`;
+export const TRANSFER_NOTE_LATER = `${TRANSFER_BASE} 초보자도 충분히 도전할 수 있게 잡았습니다.`;
 
 /** 평가 공정성 안내 */
 export const FAIRNESS_NOTE =

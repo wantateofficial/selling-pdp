@@ -1,5 +1,5 @@
 # 프로젝트 관리 마커 (CMMI-lite). 진행률은 PRD/DASHBOARD 체크박스에서 자동 계산.
-oneliner: "쇼핑숏폼 무료 데모강의 + 4주 챌린지 전환 랜딩페이지 (Saturday Club)"
+oneliner: "쇼핑숏폼 무료 데모강의 + 4주 챌린지 전환 랜딩페이지 (Saturday Lab)"
 phase: 배포              # 기획 | 설계 | 구현 | 검증 | 배포
 risk: ""
 next: "전환율 측정·개선"

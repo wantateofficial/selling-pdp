@@ -4,9 +4,7 @@
 #   - staging 브랜치 → 스테이징(브랜치 배포): staging--saturdayclub-selling-pdp.netlify.app
 # 흐름: staging에 push → 스테이징 자동배포 → 테스트 → master로 승격 → 라이브 자동배포.
 #
-# ⚠️ VITE_SIGNUP_ENDPOINT 는 여기(커밋되는 파일)에 넣지 말 것.
-#    Netlify UI → Environment variables 에 등록해야 Git 빌드에서 폼 저장이 작동한다.
-#    (Vite는 VITE_* 를 빌드 시점에 굽는다.)
+# 신청자 저장 주소는 src/data/signup.ts 의 SIGNUP_ENDPOINT 에서 관리한다. (코드 값이 Netlify 환경변수보다 우선)
 
 [build]
   command = "npm run build"

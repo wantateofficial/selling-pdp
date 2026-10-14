@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "새러데이클럽 쇼핑숏폼 상세페이지 생성 에이전트 (v1)",
+  "description": "새러데이 랩 쇼핑숏폼 상세페이지 생성 에이전트 (v1)",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

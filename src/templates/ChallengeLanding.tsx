@@ -8,6 +8,7 @@ import { TrackRecordSection } from '../components/sections/TrackRecordSection';
 import { BenefitSection } from '../components/sections/BenefitSection';
 import { CurriculumSection } from '../components/sections/CurriculumSection';
 import { ProofCaptureSection } from '../components/sections/ProofCaptureSection';
+import { ReviewSection } from '../components/sections/ReviewSection';
 import { PricingSection } from '../components/sections/PricingSection';
 import { RewardSection } from '../components/sections/RewardSection';
 import { EvaluationSection } from '../components/sections/EvaluationSection';
@@ -24,6 +25,8 @@ interface Props {
 
 /** 유료 4주 챌린지 상세페이지 — 마스터 레이아웃(팀·숫자·증거 설득 구조) */
 export function ChallengeLanding({ data, fixedWidth }: Props) {
+  // 1기 후기는 2기 페이지부터 노출. 가격표(PRICING)는 1기 전용이라 2기 가격 확정 전까지 숨긴다.
+  const isFirstCohort = parseInt(data.basics.cohort ?? '1', 10) < 2;
   return (
     <PageShell fixedWidth={fixedWidth}>
       <HeroSection data={data} />
@@ -40,6 +43,7 @@ export function ChallengeLanding({ data, fixedWidth }: Props) {
       />
       <CurriculumSection data={data} />
       <ProofCaptureSection />
+      {!isFirstCohort && <ReviewSection />}
       <BenefitSection
         sectionKey="what-you-build"
         eyebrow="WHAT YOU BUILD"
@@ -48,9 +52,9 @@ export function ChallengeLanding({ data, fixedWidth }: Props) {
         robot="cheer"
         bg="white"
       />
-      <PricingSection />
+      {isFirstCohort && <PricingSection />}
       <RewardSection />
-      <EvaluationSection />
+      <EvaluationSection firstCohort={isFirstCohort} />
       <RefundSection />
       <TargetSection items={data.recommendedFor.length ? data.recommendedFor : data.targets} />
       <FAQSection data={data} />

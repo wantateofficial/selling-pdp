@@ -69,6 +69,18 @@ export function normalizeCourseData(raw: string, slug: string): CourseData {
       case '운영 구조':
         basics.groupStructure = kv.value;
         break;
+      case '기수':
+        basics.cohort = kv.value;
+        break;
+      case '신청 탭':
+        basics.signupTab = kv.value;
+        break;
+      case '혜택':
+        basics.perk = kv.value;
+        break;
+      case '혜택 제목':
+        basics.benefitTitle = kv.value;
+        break;
       case 'CTA':
         basics.cta = kv.value;
         break;
@@ -106,12 +118,13 @@ export function normalizeCourseData(raw: string, slug: string): CourseData {
   }
 
   // 링크 (신청폼/카카오톡) — 없으면 placeholder '#'
-  const links = { apply: '#', kakao: '#' };
+  const links: CourseData['links'] = { apply: '#', kakao: '#' };
   for (const b of bullets(get('링크'))) {
     const kv = splitKeyValue(b);
     if (!kv) continue;
     if (kv.key === '신청폼') links.apply = kv.value || '#';
     if (kv.key === '카카오톡') links.kakao = kv.value || '#';
+    if (kv.key === '신청 저장' && kv.value) links.signupEndpoint = kv.value;
   }
 
   return {

@@ -11,7 +11,9 @@ import type { CourseData, PageType } from '../src/types';
 const SOURCES: Record<PageType, string> = {
   demo: 'content/shopping-shorts-demo.md',
   demo2: 'content/shopping-shorts-demo-0718.md',
+  demo3: 'content/shopping-shorts-demo-1024.md',
   challenge: 'content/shopping-shorts-challenge.md',
+  challenge2: 'content/shopping-shorts-challenge-2.md',
 };
 
 // 페이지 타입별 섹션 정의: [섹션ID, 표시명, 현재 내용 요약 함수]

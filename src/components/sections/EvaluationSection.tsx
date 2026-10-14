@@ -3,6 +3,7 @@ import {
   EVALUATION,
   EVAL_PHILOSOPHY,
   TRANSFER_NOTE,
+  TRANSFER_NOTE_LATER,
   FAIRNESS_NOTE,
   ANTI_FRAUD_NOTE,
   APPEAL_NOTE,
@@ -11,7 +12,7 @@ import {
 const TOTAL = EVALUATION.reduce((sum, e) => sum + e.points, 0);
 
 /** Section (challenge). Leaderboard Evaluation — 사전 공개 평가표(100점)로 상위 10% 선정 */
-export function EvaluationSection() {
+export function EvaluationSection({ firstCohort = true }: { firstCohort?: boolean }) {
   return (
     <Section
       sectionKey="evaluation"
@@ -72,7 +73,7 @@ export function EvaluationSection() {
       {/* 고지 문구 */}
       <div className="mt-5 space-y-2">
         <p className="rounded-lg bg-sc-gray p-3 text-sm leading-relaxed text-sc-outline/75">
-          🔎 {TRANSFER_NOTE}
+          🔎 {firstCohort ? TRANSFER_NOTE : TRANSFER_NOTE_LATER}
         </p>
         <p className="rounded-lg bg-sc-gray p-3 text-sm leading-relaxed text-sc-outline/75">
           ⚖️ {FAIRNESS_NOTE}

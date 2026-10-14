@@ -1,7 +1,9 @@
 import { useMemo, useState, useEffect } from 'react';
 import demoMd from '../content/shopping-shorts-demo.md?raw';
 import demo2Md from '../content/shopping-shorts-demo-0718.md?raw';
+import demo3Md from '../content/shopping-shorts-demo-1024.md?raw';
 import challengeMd from '../content/shopping-shorts-challenge.md?raw';
+import challenge2Md from '../content/shopping-shorts-challenge-2.md?raw';
 import { normalizeCourseData } from './parser/normalizeCourseData';
 import { DemoLanding } from './templates/DemoLanding';
 import { ChallengeLanding } from './templates/ChallengeLanding';
@@ -11,13 +13,17 @@ import type { PageType } from './types';
 const SOURCES: Record<PageType, { md: string; slug: string }> = {
   demo: { md: demoMd, slug: 'shopping-shorts-demo' },
   demo2: { md: demo2Md, slug: 'shopping-shorts-demo-0718' },
+  demo3: { md: demo3Md, slug: 'shopping-shorts-demo-1024' },
   challenge: { md: challengeMd, slug: 'shopping-shorts-challenge' },
+  challenge2: { md: challenge2Md, slug: 'shopping-shorts-challenge-2' },
 };
 
 const TOGGLE: { key: PageType; label: string }[] = [
   { key: 'demo', label: '데모1 (7/9)' },
   { key: 'demo2', label: '데모2 (7/18)' },
+  { key: 'demo3', label: '2기 데모 (10/24)' },
   { key: 'challenge', label: '4주 챌린지' },
+  { key: 'challenge2', label: '2기 챌린지' },
 ];
 
 // 미리보기 전용 UI(페이지 토글)는 스테이징/개발에서만 노출, 라이브(프로덕션)에선 숨김.
@@ -27,9 +33,7 @@ const PREVIEW_UI = import.meta.env.VITE_SHOW_EDIT_REQUEST !== 'false';
 
 function getInitialPage(): PageType {
   const p = new URLSearchParams(window.location.search).get('page');
-  if (p === 'challenge') return 'challenge';
-  if (p === 'demo2') return 'demo2';
-  return 'demo';
+  return p && p in SOURCES ? (p as PageType) : 'demo';
 }
 
 export default function App() {
@@ -66,7 +70,7 @@ export default function App() {
     <>
       <ContentProtection enabled={!isExport} />
       {!isExport && PREVIEW_UI && (
-        <div className="no-export sticky top-0 z-50 flex items-center justify-center gap-2 border-b-2 border-sc-outline bg-white px-4 py-2">
+        <div className="no-export sticky top-0 z-50 flex flex-wrap items-center justify-center gap-2 border-b-2 border-sc-outline bg-white px-4 py-2">
           <span className="text-sm font-bold">미리보기:</span>
           {TOGGLE.map((t) => (
             <button
@@ -82,7 +86,7 @@ export default function App() {
         </div>
       )}
 
-      {page === 'challenge' ? (
+      {data.pageType === 'challenge' ? (
         <ChallengeLanding data={data} fixedWidth={isExport} />
       ) : (
         <DemoLanding data={data} fixedWidth={isExport} />

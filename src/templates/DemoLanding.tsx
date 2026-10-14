@@ -9,6 +9,7 @@ import { TrackRecordSection } from '../components/sections/TrackRecordSection';
 import { BeginnerPromiseSection } from '../components/sections/BeginnerPromiseSection';
 import { CurriculumSection } from '../components/sections/CurriculumSection';
 import { ProofCaptureSection } from '../components/sections/ProofCaptureSection';
+import { ReviewSection } from '../components/sections/ReviewSection';
 import { BenefitSection } from '../components/sections/BenefitSection';
 import { TrustSection } from '../components/sections/TrustSection';
 import { TargetSection } from '../components/sections/TargetSection';
@@ -25,6 +26,8 @@ interface Props {
 
 /** 무료 데모강의 상세페이지 — 마스터 레이아웃(팀·숫자·증거 설득 구조) */
 export function DemoLanding({ data, fixedWidth }: Props) {
+  // 1기 후기는 2기 페이지부터 노출
+  const hasPastCohort = parseInt(data.basics.cohort ?? '1', 10) >= 2;
   return (
     <PageShell fixedWidth={fixedWidth}>
       <HeroSection data={data} />
@@ -35,10 +38,11 @@ export function DemoLanding({ data, fixedWidth }: Props) {
       <BeginnerPromiseSection />
       <CurriculumSection data={data} />
       <ProofCaptureSection />
+      {hasPastCohort && <ReviewSection />}
       <BenefitSection
         sectionKey="what-you-get"
         eyebrow="WHAT YOU GET"
-        title="무료 데모 신청만으로 받는 것"
+        title={data.basics.benefitTitle || '무료 데모 신청만으로 받는 것'}
         items={data.benefits}
         robot="money"
         bg="white"
