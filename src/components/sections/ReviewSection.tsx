@@ -5,6 +5,7 @@ import {
   CHAT_REVIEWS,
   FEEDBACK_SHOTS,
   REVIEW_DISCLAIMER,
+  COHORT_RESULT,
   REVIEWS_CONSENT_CONFIRMED,
   type ChatReview,
 } from '../../data/reviews';
@@ -83,7 +84,18 @@ export function ReviewSection() {
         </p>
       )}
 
-      <div className="flex items-center gap-3">
+      {/* 1기 결과 요약 (모수와 금액을 그대로 밝힌다) */}
+      <div className="grid gap-3 sm:grid-cols-3">
+        {COHORT_RESULT.stats.map((s) => (
+          <div key={s.label} className="sc-card flex flex-col items-center p-5 text-center">
+            <span className="text-2xl font-extrabold text-sc-blue">{s.value}</span>
+            <span className="mt-1 text-sm font-semibold leading-snug text-sc-outline/70">{s.label}</span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 font-semibold leading-relaxed">{COHORT_RESULT.summary}</p>
+
+      <div className="mt-10 flex items-center gap-3">
         <PixelRobot expression="cheer" size={64} />
         <p className="font-semibold text-sc-outline/80">
           왕초보로 시작한 1기 수강생들이 챌린지 동안 카카오톡으로 남긴 실제 대화예요.

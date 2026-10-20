@@ -9,6 +9,7 @@ import { TrackRecordSection } from '../components/sections/TrackRecordSection';
 import { BeginnerPromiseSection } from '../components/sections/BeginnerPromiseSection';
 import { CurriculumSection } from '../components/sections/CurriculumSection';
 import { ProofCaptureSection } from '../components/sections/ProofCaptureSection';
+import { ToolSection } from '../components/sections/ToolSection';
 import { ReviewSection } from '../components/sections/ReviewSection';
 import { BenefitSection } from '../components/sections/BenefitSection';
 import { TrustSection } from '../components/sections/TrustSection';
@@ -37,6 +38,7 @@ export function DemoLanding({ data, fixedWidth }: Props) {
       <TrackRecordSection />
       <BeginnerPromiseSection />
       <CurriculumSection data={data} />
+      {data.tool && <ToolSection tool={data.tool} />}
       <ProofCaptureSection />
       {hasPastCohort && <ReviewSection />}
       <BenefitSection

@@ -127,6 +127,21 @@ export function normalizeCourseData(raw: string, slug: string): CourseData {
     if (kv.key === '신청 저장' && kv.value) links.signupEndpoint = kv.value;
   }
 
+  // 수강생 전용 툴 — "이름/소개/제공 기간: 값" 라벨 + 나머지 불릿은 기능 목록
+  let tool: CourseData['tool'];
+  const toolBullets = bullets(get('수강생 전용 툴'));
+  if (toolBullets.length) {
+    tool = { name: '', features: [] };
+    for (const b of toolBullets) {
+      const kv = splitKeyValue(b);
+      if (kv?.key === '이름') tool.name = kv.value;
+      else if (kv?.key === '소개') tool.intro = kv.value;
+      else if (kv?.key === '제공 기간') tool.period = kv.value;
+      else if (kv?.key === '시연') tool.demoNote = kv.value;
+      else tool.features.push(b);
+    }
+  }
+
   return {
     pageType,
     slug,
@@ -137,6 +152,7 @@ export function normalizeCourseData(raw: string, slug: string): CourseData {
     problems: bullets(get('고객 문제')),
     curriculum,
     benefits: bullets(get('제공 자료')),
+    tool,
     usp: bullets(get('핵심 USP')),
     evaluation: bullets(get('평가 구조')),
     refund: firstParagraph(get('환급 구조')),

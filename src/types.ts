@@ -50,6 +50,8 @@ export interface CourseData {
   problems: string[];
   curriculum: CurriculumItem[];
   benefits: string[];
+  /** 수강생 전용 툴 (## 수강생 전용 툴). 없으면 섹션 숨김 */
+  tool?: { name: string; intro?: string; period?: string; demoNote?: string; features: string[] };
   usp: string[];
   evaluation: string[];
   refund: string;

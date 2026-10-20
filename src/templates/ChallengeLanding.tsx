@@ -9,6 +9,7 @@ import { BenefitSection } from '../components/sections/BenefitSection';
 import { CurriculumSection } from '../components/sections/CurriculumSection';
 import { ProofCaptureSection } from '../components/sections/ProofCaptureSection';
 import { ReviewSection } from '../components/sections/ReviewSection';
+import { ToolSection } from '../components/sections/ToolSection';
 import { PricingSection } from '../components/sections/PricingSection';
 import { PRICING_PLANS } from '../data/challenge';
 import { RewardSection } from '../components/sections/RewardSection';
@@ -54,6 +55,7 @@ export function ChallengeLanding({ data, fixedWidth }: Props) {
         robot="cheer"
         bg="white"
       />
+      {data.tool && <ToolSection tool={data.tool} />}
       {pricing && <PricingSection plan={pricing} />}
       <RewardSection />
       <EvaluationSection firstCohort={isFirstCohort} />
