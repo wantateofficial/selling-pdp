@@ -4,6 +4,7 @@ import { EditMarker } from '../layout/EditMarker';
 import { SaturdayClubLogo } from '../brand/SaturdayClubLogo';
 import { PixelRobot } from '../brand/PixelRobot';
 import { DotPattern } from '../brand/DotPattern';
+import { ParenBreak } from '../layout/ParenBreak';
 
 interface Props {
   data: CourseData;
@@ -39,8 +40,13 @@ export function HeroSection({ data }: Props) {
               {data.pageType === 'demo' ? '무료 데모강의' : '4주 실전 챌린지'}
             </span>
           </div>
-          <h1 className="mb-5 text-[34px] font-extrabold leading-[1.25] tracking-tight">
-            {data.title}
+          <h1 className="mb-5 text-[30px] sm:text-[34px] font-extrabold leading-[1.25] tracking-tight">
+            {/* "…NO!" 처럼 느낌표·물음표 뒤에서 줄을 나누고, "할 수 있는"·"4주 실전"은 한 덩어리로 둔다 */}
+            {data.title.split(/(?<=[!?])\s+/).map((part, i) => (
+              <span key={i} className="block">
+                {part.replace(/ 수 /g, '\u00A0수\u00A0').replace(/(\d+주) /g, '$1\u00A0')}
+              </span>
+            ))}
           </h1>
           <p className="mb-7 text-lg text-sc-outline/80">{data.oneLiner}</p>
 
@@ -50,7 +56,7 @@ export function HeroSection({ data }: Props) {
                 key={c}
                 className="rounded-lg border border-sc-outline/20 bg-white px-3 py-1.5 text-sm font-semibold"
               >
-                {c}
+                <ParenBreak text={c} subClassName="text-xs opacity-60" />
               </span>
             ))}
           </div>

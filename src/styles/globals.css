@@ -24,7 +24,23 @@
     color: var(--sc-outline);
     background: #ffffff;
     word-break: keep-all;
+    overflow-wrap: break-word;
     line-height: 1.6;
+  }
+  /* 한글 줄바꿈: 제목은 줄 길이를 고르게, 본문은 마지막 줄에 한두 단어만 남지 않게 */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  figcaption,
+  span,
+  label,
+  summary {
+    text-wrap: pretty;
   }
   /* 콘텐츠 보호 활성(body.sc-protected) 시에만 텍스트 선택 차단 (입력 필드 예외) */
   body.sc-protected {

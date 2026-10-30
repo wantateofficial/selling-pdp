@@ -1,5 +1,6 @@
 import { Section } from '../layout/Section';
 import type { PricingPlan } from '../../data/challenge';
+import { ParenBreak } from '../layout/ParenBreak';
 
 /** Section (challenge). Pricing — 기수 한정 특별가 3구간 (할인율 % 비노출, 금액·인원 위주) */
 export function PricingSection({ plan }: { plan: PricingPlan }) {
@@ -28,7 +29,7 @@ export function PricingSection({ plan }: { plan: PricingPlan }) {
             <span className="text-sm font-bold text-sc-blue">{t.name}</span>
             <span className="mt-1 text-3xl font-extrabold">{t.price}</span>
             <span className="mt-2 text-sm font-semibold text-sc-outline/80">{t.seats}</span>
-            <span className="mt-1 text-sm leading-snug text-sc-outline/60">{t.condition}</span>
+            <span className="mt-1 text-sm leading-snug text-sc-outline/60"><ParenBreak text={t.condition} /></span>
           </div>
         ))}
       </div>

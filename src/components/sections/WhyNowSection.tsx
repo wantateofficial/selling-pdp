@@ -1,5 +1,6 @@
 import { Section } from '../layout/Section';
 import { PixelRobot } from '../brand/PixelRobot';
+import { ParenBreak } from '../layout/ParenBreak';
 
 const POINTS = [
   {
@@ -24,11 +25,11 @@ const STATS = [
 ];
 
 /** Section 02. Why Now — 지금 배워야 하는 이유 */
-export function WhyNowSection() {
+export function WhyNowSection({ robot = true }: { robot?: boolean }) {
   return (
     <Section sectionKey="why-now" eyebrow="WHY NOW" title="왜 지금 쇼핑숏폼인가" bg="white">
-      <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
-        <PixelRobot expression="surprised" size={130} className="mx-auto" />
+      <div className={`grid items-center gap-8 ${robot ? 'md:grid-cols-[auto_1fr]' : ''}`}>
+        {robot && <PixelRobot expression="surprised" size={130} className="mx-auto" />}
         <div className="grid gap-4">
           {POINTS.map((p, i) => (
             <div key={p.t} className="sc-card flex gap-4 p-5">
@@ -48,7 +49,7 @@ export function WhyNowSection() {
           <div key={s.v} className="rounded-2xl bg-sc-gray p-4">
             <span className="block text-3xl font-extrabold text-sc-blue">{s.v}</span>
             <span className="mt-1 block text-sm font-semibold leading-snug text-sc-outline/80">
-              {s.l}
+              <ParenBreak text={s.l} />
             </span>
           </div>
         ))}

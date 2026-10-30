@@ -30,12 +30,14 @@ export function ChallengeLanding({ data, fixedWidth }: Props) {
   // 1기 후기는 2기 페이지부터 노출. 가격표는 기수별(PRICING_PLANS), 없는 기수면 숨긴다.
   const isFirstCohort = parseInt(data.basics.cohort ?? '1', 10) < 2;
   const pricing = PRICING_PLANS[data.basics.cohort ?? '1기'];
+  // 2기부터는 마스코트를 줄인다 (데모와 같은 기준: 실적·전용 툴·최종 CTA 에서 숨김)
+  const robot = isFirstCohort;
   return (
     <PageShell fixedWidth={fixedWidth}>
       <HeroSection data={data} />
       <StatProofSection />
       <ProblemSection data={data} />
-      <TrackRecordSection />
+      <TrackRecordSection robot={robot} />
       <BenefitSection
         sectionKey="mechanism"
         eyebrow="HOW IT WORKS"
@@ -55,14 +57,14 @@ export function ChallengeLanding({ data, fixedWidth }: Props) {
         robot="cheer"
         bg="white"
       />
-      {data.tool && <ToolSection tool={data.tool} />}
+      {data.tool && <ToolSection tool={data.tool} robot={robot} />}
       {pricing && <PricingSection plan={pricing} />}
       <RewardSection />
       <EvaluationSection firstCohort={isFirstCohort} />
       <RefundSection />
       <TargetSection items={data.recommendedFor.length ? data.recommendedFor : data.targets} />
       <FAQSection data={data} />
-      <FinalCTASection data={data} />
+      <FinalCTASection data={data} robot={robot} />
       <Footer />
       <StickyCTA data={data} />
     </PageShell>

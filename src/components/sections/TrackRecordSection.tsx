@@ -4,7 +4,7 @@ import { HighlightBox } from '../layout/HighlightBox';
 import { TRACK_RECORD, INSTRUCTOR, INSTRUCTOR_BACKGROUND } from '../../data/company';
 
 /** Section 04. Track Record — "우리는 이렇게 했다" 회사/팀 실적 (신뢰의 핵심 앵커) */
-export function TrackRecordSection() {
+export function TrackRecordSection({ robot = true }: { robot?: boolean }) {
   return (
     <Section
       sectionKey="track-record"
@@ -12,7 +12,7 @@ export function TrackRecordSection() {
       title="우리는 이렇게 해왔습니다"
       bg="cream"
     >
-      <div className="grid items-start gap-8 md:grid-cols-[1fr_auto]">
+      <div className={`grid items-start gap-8 ${robot ? 'md:grid-cols-[1fr_auto]' : ''}`}>
         <div className="space-y-4">
           {TRACK_RECORD.map((t) => (
             <div key={t.period} className="sc-card p-5">
@@ -30,7 +30,7 @@ export function TrackRecordSection() {
             </div>
           ))}
         </div>
-        <PixelRobot expression="idle" size={150} className="mx-auto" />
+        {robot && <PixelRobot expression="idle" size={150} className="mx-auto" />}
       </div>
 
       {/* 강사 현장 배너 — "직접 교육을 운영하는 사람" 시각 증거 */}

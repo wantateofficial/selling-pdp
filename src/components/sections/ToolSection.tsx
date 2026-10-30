@@ -6,11 +6,17 @@ import type { CourseData } from '../../types';
  * Section (challenge). 수강생 전용 툴 — 유료 수강생에게 수강기간 동안 무료로 여는 프로그램.
  * 콘텐츠 md 의 `## 수강생 전용 툴` 이 있을 때만 보인다. 데모 페이지에서는 `시연:` 문구로 "데모에서 보여 준다"를 강조한다.
  */
-export function ToolSection({ tool }: { tool: NonNullable<CourseData['tool']> }) {
+export function ToolSection({
+  tool,
+  robot = true,
+}: {
+  tool: NonNullable<CourseData['tool']>;
+  robot?: boolean;
+}) {
   const period = tool.period || '수강기간 동안 무료';
   return (
     <Section sectionKey="tool" eyebrow="수강생 전용 툴" title={tool.name || '쇼핑숏폼 수강생 전용 툴'} bg="cream">
-      <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+      <div className={`grid items-center gap-8 ${robot ? 'md:grid-cols-[1fr_auto]' : ''}`}>
         <div>
           <div className="flex flex-wrap gap-2">
             <span className="rounded-full bg-sc-orange px-3 py-1 text-xs font-extrabold text-white">
@@ -42,7 +48,7 @@ export function ToolSection({ tool }: { tool: NonNullable<CourseData['tool']> })
             ※ 툴은 수강기간 동안에만 이용할 수 있고, 수강기간이 끝나면 이용이 종료됩니다.
           </p>
         </div>
-        <PixelRobot expression="cheer" size={120} className="mx-auto" />
+        {robot && <PixelRobot expression="cheer" size={120} className="mx-auto" />}
       </div>
     </Section>
   );

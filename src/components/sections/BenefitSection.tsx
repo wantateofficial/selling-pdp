@@ -1,6 +1,7 @@
 import { Section } from '../layout/Section';
 import { PixelRobot } from '../brand/PixelRobot';
 import type { RobotExpression } from '../brand/PixelRobot';
+import { ParenBreak } from '../layout/ParenBreak';
 
 interface Props {
   sectionKey: string;
@@ -33,7 +34,9 @@ export function BenefitSection({
               <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-sc-mint text-sm font-extrabold text-sc-outline">
                 ★
               </span>
-              <p className="font-semibold">{it}</p>
+              <p className="font-semibold">
+                <ParenBreak text={it} subClassName="text-sm font-medium opacity-60" />
+              </p>
             </div>
           ))}
         </div>

@@ -7,10 +7,12 @@ import { SignupForm } from './SignupForm';
 
 interface Props {
   data: CourseData;
+  /** false 면 상단 마스코트를 숨긴다 */
+  robot?: boolean;
 }
 
 /** Section 12. Final CTA — 데모: 신청 폼 / 챌린지: 신청 버튼 */
-export function FinalCTASection({ data }: Props) {
+export function FinalCTASection({ data, robot = true }: Props) {
   const isDemo = data.pageType === 'demo';
 
   return (
@@ -22,11 +24,13 @@ export function FinalCTASection({ data }: Props) {
       <DotPattern className="opacity-20" />
       <EditMarker sectionKey="final-cta" sectionTitle="Final CTA" />
       <div className="relative mx-auto flex w-full max-w-[840px] flex-col items-center text-center">
-        <PixelRobot
-          expression="cheer"
-          size={150}
-          className="mb-5 animate-float motion-reduce:animate-none"
-        />
+        {robot && (
+          <PixelRobot
+            expression="cheer"
+            size={150}
+            className="mb-5 animate-float motion-reduce:animate-none"
+          />
+        )}
         <h2 className="mb-3 text-[30px] font-extrabold leading-snug">
           지금 신청하면 바로 안내드려요
         </h2>

@@ -29,16 +29,18 @@ interface Props {
 export function DemoLanding({ data, fixedWidth }: Props) {
   // 1기 후기는 2기 페이지부터 노출
   const hasPastCohort = parseInt(data.basics.cohort ?? '1', 10) >= 2;
+  // 2기 데모부터는 마스코트를 줄인다 (왜 지금·실적·초보 OK·전용 툴·최종 CTA 에서 숨김)
+  const robot = !hasPastCohort;
   return (
     <PageShell fixedWidth={fixedWidth}>
       <HeroSection data={data} />
       <StatProofSection />
-      <WhyNowSection />
+      <WhyNowSection robot={robot} />
       <ProblemSection data={data} />
-      <TrackRecordSection />
-      <BeginnerPromiseSection />
+      <TrackRecordSection robot={robot} />
+      <BeginnerPromiseSection robot={robot} />
       <CurriculumSection data={data} />
-      {data.tool && <ToolSection tool={data.tool} />}
+      {data.tool && <ToolSection tool={data.tool} robot={robot} />}
       <ProofCaptureSection />
       {hasPastCohort && <ReviewSection />}
       <BenefitSection
@@ -54,7 +56,7 @@ export function DemoLanding({ data, fixedWidth }: Props) {
       <NotForSection items={data.notRecommendedFor} />
       <HowToJoinSection steps={data.howToJoin} />
       <FAQSection data={data} />
-      <FinalCTASection data={data} />
+      <FinalCTASection data={data} robot={robot} />
       <Footer />
       <StickyCTA data={data} />
     </PageShell>

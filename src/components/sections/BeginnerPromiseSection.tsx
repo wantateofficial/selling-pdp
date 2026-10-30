@@ -10,7 +10,7 @@ const PROMISES = [
 ];
 
 /** Section 03. Beginner Promise — 초보자 진입장벽 제거 */
-export function BeginnerPromiseSection() {
+export function BeginnerPromiseSection({ robot = true }: { robot?: boolean }) {
   return (
     <Section
       sectionKey="beginner"
@@ -18,8 +18,8 @@ export function BeginnerPromiseSection() {
       title="처음이어도 시작할 수 있어요"
       bg="cream"
     >
-      <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
-        <PixelRobot expression="wink" size={150} className="mx-auto" />
+      <div className={`grid items-center gap-8 ${robot ? 'md:grid-cols-[auto_1fr]' : ''}`}>
+        {robot && <PixelRobot expression="wink" size={150} className="mx-auto" />}
         <ul className="grid gap-3">
           {PROMISES.map((p) => (
             <li key={p} className="flex items-center gap-3 text-lg font-semibold">
