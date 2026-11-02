@@ -4,12 +4,22 @@ import { resolve } from 'node:path';
 
 /**
  * 상세페이지를 1000px 고정 폭 긴 이미지로 캡처한다.
- * 사용: tsx scripts/export-page.ts <demo|challenge>
+ * 사용: tsx scripts/export-page.ts <demo|demo2|demo3|challenge|challenge2>
  * 전제: 다른 터미널에서 `npm run dev` 가 떠 있어야 한다.
  */
-const pageType = (process.argv[2] as 'demo' | 'challenge') || 'demo';
-const slug =
-  pageType === 'challenge' ? 'shopping-shorts-challenge' : 'shopping-shorts-demo';
+const SLUGS = {
+  demo: 'shopping-shorts-demo',
+  demo2: 'shopping-shorts-demo-0718',
+  demo3: 'shopping-shorts-demo-1024',
+  challenge: 'shopping-shorts-challenge',
+  challenge2: 'shopping-shorts-challenge-2',
+} as const;
+const pageType = (process.argv[2] || 'demo') as keyof typeof SLUGS;
+if (!(pageType in SLUGS)) {
+  console.error(`unknown page: ${pageType} (use ${Object.keys(SLUGS).join('|')})`);
+  process.exit(1);
+}
+const slug = SLUGS[pageType];
 
 const BASE = process.env.BASE_URL || 'http://localhost:5183';
 const SCALE = Number(process.env.SCALE || 2); // 2 = 레티나 화질 (파일은 2000px 폭)

@@ -11,7 +11,11 @@
     "preview": "vite preview",
     "export:demo": "tsx scripts/export-page.ts demo",
     "export:challenge": "tsx scripts/export-page.ts challenge",
-    "export:all": "tsx scripts/export-page.ts demo && tsx scripts/export-page.ts challenge",
+    "export:demo3": "tsx scripts/export-page.ts demo3",
+    "export:challenge2": "tsx scripts/export-page.ts challenge2",
+    "sections:demo3": "tsx scripts/export-sections.ts demo3",
+    "sections:challenge2": "tsx scripts/export-sections.ts challenge2",
+    "export:all":"tsx scripts/export-page.ts demo && tsx scripts/export-page.ts challenge",
     "thumbs:demo": "tsx scripts/export-thumbnails.ts demo",
     "thumbs:challenge": "tsx scripts/export-thumbnails.ts challenge",
     "prompts": "tsx scripts/generate-prompts.ts"
