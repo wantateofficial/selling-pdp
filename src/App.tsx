@@ -21,7 +21,7 @@ const SOURCES: Record<PageType, { md: string; slug: string }> = {
 const TOGGLE: { key: PageType; label: string }[] = [
   { key: 'demo', label: '데모1 (7/9)' },
   { key: 'demo2', label: '데모2 (7/18)' },
-  { key: 'demo3', label: '2기 데모 (10/24)' },
+  { key: 'demo3', label: '2기 데모 (11/7)' },
   { key: 'challenge', label: '4주 챌린지' },
   { key: 'challenge2', label: '2기 챌린지' },
 ];

@@ -48,7 +48,7 @@ export const PRICING_PLANS: Record<string, PricingPlan> = {
   '2기': {
     cohort: '2기',
     title: '2기도 지금이 가장 좋은 가격',
-    tiers: threeTiers('10/24 데모강의일까지 신청 · 결제 완료 순'),
+    tiers: threeTiers('11/7 데모강의일까지 신청 · 결제 완료 순'),
     note: '정규 오픈 예정가 60만원 과정입니다. 2기에 한해 특별가로 모셔요. 총 50명 정원이며, 인원은 결제 완료 순으로 마감됩니다.',
     footnote: '※ 가격과 인원은 2기에 한정되며, 결제 완료 순으로 마감됩니다. 정규 오픈 예정가는 60만원입니다.',
   },
