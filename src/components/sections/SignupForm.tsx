@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { CourseData } from '../../types';
 import { resolveSignupEndpoint } from '../../data/signup';
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
 
 /**
  * 무료 데모 신청 폼 — 회원가입 없이 이름·연락처만 받아 접수한다.
  * 접수 흐름: 폼 제출 → 신청 저장 주소(src/data/signup.ts, 구글 Apps Script 웹앱=DB)로 전송 →
  *            성공 시 카카오톡 단톡방 입장 버튼 노출.
  * 엔드포인트가 없으면(개발/미설정) 로컬에서 성공 처리해 흐름만 확인한다.
+ *
+ * Meta 픽셀 Lead: 백엔드(signup.gs)가 시트 저장 후 돌려주는 { ok: true } 를 읽었을 때만 한 번 보낸다.
+ * 응답을 읽을 수 없거나 ok 가 아니면 보내지 않는다. (픽셀 기본 코드는 index.html)
  */
 interface Props {
   data: CourseData;
@@ -21,13 +30,16 @@ export function SignupForm({ data }: Props) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  const leadSent = useRef(false);
+  const inFlight = useRef(false); // 빠른 연속 클릭으로 같은 신청이 두 번 저장되지 않게
 
   const ENDPOINT = resolveSignupEndpoint(data.links.signupEndpoint);
   const kakao = data.links.kakao && data.links.kakao !== '#' ? data.links.kakao : '';
   const canSubmit = name.trim().length >= 2 && isValidPhone(phone) && state !== 'sending';
 
   const submit = async () => {
-    if (!canSubmit) return;
+    if (!canSubmit || inFlight.current) return;
+    inFlight.current = true;
     const payload = {
       name: name.trim(),
       phone: phone.trim(),
@@ -43,18 +55,31 @@ export function SignupForm({ data }: Props) {
 
     setState('sending');
     try {
-      if (ENDPOINT) {
-        // Apps Script 웹앱은 CORS 응답을 주지 않으므로 no-cors fire-and-forget.
-        await fetch(ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload),
-        });
+      if (!ENDPOINT) {
+        setState('done'); // 개발/미설정: 저장하지 않았으므로 Lead 도 보내지 않는다
+        return;
       }
+      // text/plain 단순 요청이라 preflight 없이 가고, Apps Script 응답(googleusercontent 리다이렉트)은 CORS 로 읽힌다.
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+      });
+      const result = (await res.json().catch(() => null)) as { ok?: boolean } | null;
+      if (result?.ok === false) {
+        setState('error');
+        return;
+      }
+      if (result?.ok === true && !leadSent.current) {
+        leadSent.current = true;
+        window.fbq?.('track', 'Lead', { content_name: payload.page });
+      }
+      // 응답 형식이 예상과 달라도(예전 배포본) 요청은 들어갔으므로 화면은 접수 완료로 둔다. Lead 는 보내지 않음.
       setState('done');
     } catch {
       setState('error');
+    } finally {
+      inFlight.current = false;
     }
   };
 
