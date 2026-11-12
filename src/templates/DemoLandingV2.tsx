@@ -20,7 +20,7 @@ import { INSTRUCTOR, PROOF_TOP4, PROOF_DISCLAIMER, type ProofItem } from '../dat
  *  - PC는 여백을 넉넉히 (섹션 하나에 메시지 하나)
  *
  * 순서: 첫 화면(신청폼) → 강사 실제 조회수 → 강사 소개 → 1기 결과와 후기
- *      → 2시간 동안 다루는 것 → 참여 혜택(전자책) → 에스씨 → 신청폼 → FAQ → 약관
+ *      → 2시간 동안 다루는 것 → 참여 혜택(전자책) → FAQ(접힘) → 에스씨 → 신청폼 → 약관
  */
 
 interface Props {
@@ -433,9 +433,10 @@ export function DemoLandingV2({ data, fixedWidth }: Props) {
       <Cohort />
       <Curriculum data={data} />
       <Benefit />
+      {/* FAQ는 신청 바로 위에, 질문만 보이게 접어 둔다 (2026-11-12 대표 요청) */}
+      <Faq data={data} />
       <Mascot />
       <BottomSignup data={data} />
-      <Faq data={data} />
       <Footer />
       <StickyCTA data={data} showAfterId="signup-top" />
     </main>
