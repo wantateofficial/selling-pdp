@@ -5,6 +5,7 @@ import { resolveSignupEndpoint } from '../../data/signup';
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
@@ -19,6 +20,10 @@ declare global {
  */
 interface Props {
   data: CourseData;
+  /** 폼 위치. Clarity 이벤트 이름(signup_hero / signup_bottom)에 쓰인다. */
+  placement?: 'hero' | 'bottom';
+  /** true 면 제목과 테두리 상자 없이 입력칸과 버튼만 보여준다 (첫 화면용) */
+  compact?: boolean;
 }
 
 /** 010-1234-5678 / 01012345678 등 허용. 숫자 10~11자리면 통과. */
@@ -26,7 +31,7 @@ function isValidPhone(v: string): boolean {
   return /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(v.trim());
 }
 
-export function SignupForm({ data }: Props) {
+export function SignupForm({ data, placement = 'bottom', compact = false }: Props) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
@@ -73,6 +78,7 @@ export function SignupForm({ data }: Props) {
       if (result?.ok === true && !leadSent.current) {
         leadSent.current = true;
         window.fbq?.('track', 'Lead', { content_name: payload.page });
+        window.clarity?.('event', placement === 'hero' ? 'signup_hero' : 'signup_bottom');
       }
       // 응답 형식이 예상과 달라도(예전 배포본) 요청은 들어갔으므로 화면은 접수 완료로 둔다. Lead 는 보내지 않음.
       setState('done');
@@ -89,8 +95,7 @@ export function SignupForm({ data }: Props) {
   if (state === 'done') {
     return (
       <div className="w-full max-w-[440px] rounded-2xl border-2 border-sc-outline bg-white p-7 text-center text-sc-outline shadow-pixel">
-        <p className="text-3xl">🎉</p>
-        <p className="mt-2 text-xl font-extrabold">무료 신청이 접수됐어요!</p>
+        <p className="text-xl font-extrabold">무료 신청이 접수됐어요</p>
         <p className="mt-2 text-sm text-sc-outline/70">
           아래 단톡방에 들어오시면 강의 링크와 준비물을 안내해 드려요.
           <br />꼭 입장해 주셔야 참여하실 수 있습니다.
@@ -111,11 +116,21 @@ export function SignupForm({ data }: Props) {
   }
 
   return (
-    <div className="w-full max-w-[440px] rounded-2xl border-2 border-sc-outline bg-white p-6 text-left shadow-pixel sm:p-7">
-      <p className="mb-1 text-lg font-extrabold text-sc-outline">무료 데모강의 신청</p>
-      <p className="mb-5 text-sm text-sc-outline/60">
-        회원가입 없이 이름과 연락처만 남기면 접수돼요.
-      </p>
+    <div
+      className={
+        compact
+          ? 'w-full max-w-[440px] text-left'
+          : 'w-full max-w-[440px] rounded-2xl border-2 border-sc-outline bg-white p-6 text-left shadow-pixel sm:p-7'
+      }
+    >
+      {!compact && (
+        <>
+          <p className="mb-1 text-lg font-extrabold text-sc-outline">무료 데모강의 신청</p>
+          <p className="mb-5 text-sm text-sc-outline/60">
+            회원가입 없이 이름과 연락처만 남기면 접수돼요.
+          </p>
+        </>
+      )}
 
       <div className="space-y-3">
         <input
@@ -123,6 +138,7 @@ export function SignupForm({ data }: Props) {
           onChange={(e) => setName(e.target.value)}
           placeholder="이름"
           autoComplete="name"
+          data-clarity-mask="true"
           className={inputBase}
         />
         <input
@@ -131,6 +147,7 @@ export function SignupForm({ data }: Props) {
           placeholder="연락처 (예: 010-1234-5678)"
           inputMode="tel"
           autoComplete="tel"
+          data-clarity-mask="true"
           className={inputBase}
         />
       </div>

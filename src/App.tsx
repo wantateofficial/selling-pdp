@@ -6,6 +6,7 @@ import challengeMd from '../content/shopping-shorts-challenge.md?raw';
 import challenge2Md from '../content/shopping-shorts-challenge-2.md?raw';
 import { normalizeCourseData } from './parser/normalizeCourseData';
 import { DemoLanding } from './templates/DemoLanding';
+import { DemoLandingV2 } from './templates/DemoLandingV2';
 import { ChallengeLanding } from './templates/ChallengeLanding';
 import { ContentProtection } from './components/system/ContentProtection';
 import type { PageType } from './types';
@@ -66,6 +67,11 @@ export default function App() {
     return normalizeCourseData(src.md, src.slug);
   }, [page]);
 
+  // 브라우저 탭 제목을 강의 제목으로 (index.html 기본값은 "새러데이 랩")
+  useEffect(() => {
+    document.title = `${data.title.replace(/^\[[^\]]+\]\s*/, '')} | 새러데이 랩`;
+  }, [data.title]);
+
   return (
     <>
       <ContentProtection enabled={!isExport} />
@@ -88,6 +94,9 @@ export default function App() {
 
       {data.pageType === 'challenge' ? (
         <ChallengeLanding data={data} fixedWidth={isExport} />
+      ) : page === 'demo3' ? (
+        // 2기 데모는 광고 전환 개선판 전용 화면 (2026-11). 1기 demo, demo2 는 기존 화면 그대로.
+        <DemoLandingV2 data={data} fixedWidth={isExport} />
       ) : (
         <DemoLanding data={data} fixedWidth={isExport} />
       )}

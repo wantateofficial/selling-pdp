@@ -101,8 +101,8 @@ export const FEEDBACK_SHOTS: FeedbackShot[] = [
 export const COHORT_RESULT = {
   stats: [
     { value: '8명', label: '1기 수강생' },
-    { value: '2명 중 2명', label: '영상·글을 10개 이상 올린 수강생의 수익 발생' },
-    { value: '870원 · 5,700원', label: '두 사람이 챌린지 4주차에 낸 첫 수익' },
+    { value: '2명 중 2명', label: '영상이나 글을 10개 이상 올린 수강생의 수익 발생' },
+    { value: '870원, 5,700원', label: '두 사람이 챌린지 4주차에 낸 첫 수익' },
   ],
   summary:
     '금액은 작지만, 1기 8명 중 숏폼 영상이나 스레드 글을 10개 이상 꾸준히 올린 2명은 모두 4주차에 첫 수익을 냈어요.',

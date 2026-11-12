@@ -3,16 +3,31 @@ import { Section } from '../layout/Section';
 import { PixelRobot } from '../brand/PixelRobot';
 import { PROOF_TOP4, PROOF_DISCLAIMER, type ProofItem } from '../../data/company';
 
-/** 세로(9:16) 미디어 — GIF가 있으면 자동재생, 없으면 placeholder */
-function ReelMedia({ item }: { item: ProofItem }) {
+/** 세로(9:16) 미디어 — 압축 영상(video)이 있으면 그걸, 없으면 GIF, 둘 다 없으면 placeholder */
+export function ReelMedia({ item }: { item: ProofItem }) {
   const [failed, setFailed] = useState(false);
-  const showGif = item.gif && !failed;
+  const showVideo = !!item.video && !failed;
+  const showGif = !item.video && item.gif && !failed;
   return (
     <div className="relative mx-auto aspect-[9/16] w-[260px] shrink-0 overflow-hidden rounded-2xl border border-black/[0.08] bg-sc-gray shadow-[0_2px_10px_rgba(26,26,36,0.06)] sm:w-[312px]">
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-3 text-center">
         <PixelRobot expression="money" size={48} />
         <span className="text-xs font-bold text-sc-outline/50">영상 준비 중</span>
       </div>
+      {showVideo && (
+        <video
+          src={item.video}
+          poster={item.poster}
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={`${item.name} 쇼핑숏폼`}
+          onError={() => setFailed(true)}
+        />
+      )}
       {showGif && (
         <img
           src={item.gif}

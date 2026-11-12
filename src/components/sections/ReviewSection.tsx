@@ -14,9 +14,11 @@ import {
 const IS_PREVIEW = import.meta.env.VITE_SHOW_EDIT_REQUEST !== 'false';
 
 /** 카카오톡 대화를 말풍선으로 옮긴 카드 — 수강생은 왼쪽, 강사는 오른쪽 */
-function ChatCard({ review, wide }: { review: ChatReview; wide?: boolean }) {
+export function ChatCard({ review, wide, plain }: { review: ChatReview; wide?: boolean; plain?: boolean }) {
   return (
-    <figure className={`sc-card flex flex-col p-5 ${wide ? 'md:col-span-2' : ''}`}>
+    <figure
+      className={`flex flex-col ${plain ? 'border-t border-sc-outline/15 pt-5' : 'sc-card p-5'} ${wide ? 'md:col-span-2' : ''}`}
+    >
       <figcaption className="mb-4 flex flex-wrap items-center gap-2">
         {/* 프로필 사진은 싣지 않는다. 흐린 자리표시만 보여준다 */}
         <span aria-hidden className="h-8 w-8 rounded-full bg-sc-outline/25 blur-[3px]" />
@@ -67,14 +69,15 @@ function SubHeading({ children }: { children: string }) {
  * 강사 실적(ProofCaptureSection) 바로 뒤에서 "수강생도 해냈다"를 보여준다.
  * 큰 수익보다 실행 과정(첫 업로드·피드백) 중심으로 구성한다.
  */
-export function ReviewSection() {
+/** plain: 영어/라벨 장식과 마스코트를 뺀 버전 (2기 데모 전용 화면) */
+export function ReviewSection({ plain = false }: { plain?: boolean } = {}) {
   if (CHAT_REVIEWS.length === 0) return null;
   if (!REVIEWS_CONSENT_CONFIRMED && !IS_PREVIEW) return null;
 
   return (
     <Section
       sectionKey="reviews"
-      eyebrow="1기 수강생 후기"
+      eyebrow={plain ? undefined : '1기 수강생 후기'}
       title="먼저 시작한 1기는 이렇게 해냈어요"
       bg="cream"
     >
@@ -85,9 +88,12 @@ export function ReviewSection() {
       )}
 
       {/* 1기 결과 요약 (모수와 금액을 그대로 밝힌다) */}
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className={plain ? 'grid grid-cols-3 gap-3 border-y border-sc-outline/15 py-5' : 'grid gap-3 sm:grid-cols-3'}>
         {COHORT_RESULT.stats.map((s) => (
-          <div key={s.label} className="sc-card flex flex-col items-center p-5 text-center">
+          <div
+            key={s.label}
+            className={plain ? 'flex flex-col' : 'sc-card flex flex-col items-center p-5 text-center'}
+          >
             <span className="text-2xl font-extrabold text-sc-blue">{s.value}</span>
             <span className="mt-1 text-sm font-semibold leading-snug text-sc-outline/70">{s.label}</span>
           </div>
@@ -96,7 +102,7 @@ export function ReviewSection() {
       <p className="mt-4 font-semibold leading-relaxed">{COHORT_RESULT.summary}</p>
 
       <div className="mt-10 flex items-center gap-3">
-        <PixelRobot expression="cheer" size={64} />
+        {!plain && <PixelRobot expression="cheer" size={64} />}
         <p className="font-semibold text-sc-outline/80">
           왕초보로 시작한 1기 수강생들이 챌린지 동안 카카오톡으로 남긴 실제 대화예요.
         </p>
@@ -104,7 +110,7 @@ export function ReviewSection() {
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {CHAT_REVIEWS.map((r, i) => (
-          <ChatCard key={r.who} review={r} wide={i === 0} />
+          <ChatCard key={r.who} review={r} wide={i === 0} plain={plain} />
         ))}
       </div>
 
@@ -114,7 +120,7 @@ export function ReviewSection() {
       </p>
       <div className="grid gap-4">
         {FEEDBACK_SHOTS.map((f) => (
-          <figure key={f.title} className="overflow-hidden sc-card">
+          <figure key={f.title} className={plain ? 'overflow-hidden' : 'overflow-hidden sc-card'}>
             <img
               src={f.image}
               alt={`1기 수강생 과제에 남긴 ${f.title} 시트`}

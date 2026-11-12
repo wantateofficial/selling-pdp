@@ -63,6 +63,10 @@ export interface ProofItem {
   note: string;
   /** 자동재생 루프 GIF 경로 (mp4 트리밍 후 생성). 없으면 placeholder 표시 */
   gif?: string;
+  /** GIF를 압축한 mp4 (모바일 용량 절감, 약 300KB). 있으면 GIF 대신 이 영상을 쓴다 */
+  video?: string;
+  /** 영상 첫 장면 이미지 (로딩 전 표시) */
+  poster?: string;
 }
 
 /** Real Results에 노출할 조회수 상위 4개 (하나씩, 좌우 번갈아 + 성과 패널) */
@@ -75,6 +79,8 @@ export const PROOF_TOP4: ProofItem[] = [
     hotOn: '틱톡',
     note: '틱톡에서 크게 터진 대표 콘텐츠. 실사용 장면이 반응을 끌었습니다.',
     gif: '/assets/reels/gif/01-carmat.gif',
+    video: '/assets/reels/web/01-carmat.mp4',
+    poster: '/assets/reels/web/01-carmat.jpg',
   },
   {
     name: '버블 염색제',
@@ -84,6 +90,8 @@ export const PROOF_TOP4: ProofItem[] = [
     hotOn: '틱톡',
     note: '비포·애프터가 명확한 제품이라 끝까지 보는 영상이 많았습니다.',
     gif: '/assets/reels/gif/02-bubbledye.gif',
+    video: '/assets/reels/web/02-bubbledye.mp4',
+    poster: '/assets/reels/web/02-bubbledye.jpg',
   },
   {
     name: '미니 고데기',
@@ -93,6 +101,8 @@ export const PROOF_TOP4: ProofItem[] = [
     hotOn: '틱톡',
     note: '휴대성 강조 한 컷으로 저장·공유가 붙었습니다.',
     gif: '/assets/reels/gif/03-minihairiron.gif',
+    video: '/assets/reels/web/03-minihairiron.mp4',
+    poster: '/assets/reels/web/03-minihairiron.jpg',
   },
   {
     name: '차량용 테이블',
@@ -102,6 +112,8 @@ export const PROOF_TOP4: ProofItem[] = [
     hotOn: '틱톡·인스타 고르게',
     note: '두 플랫폼에서 고르게 퍼진 케이스. 같은 영상으로 양쪽을 잡았습니다.',
     gif: '/assets/reels/gif/04-cartable.gif',
+    video: '/assets/reels/web/04-cartable.mp4',
+    poster: '/assets/reels/web/04-cartable.jpg',
   },
 ];
 
