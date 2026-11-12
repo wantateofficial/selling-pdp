@@ -436,7 +436,8 @@ export function DemoLandingV2({ data, fixedWidth }: Props) {
       <Mascot />
       <BottomSignup data={data} />
       <Footer />
-      <StickyCTA data={data} showAfterId="signup-top" />
+      {/* 하단 고정 신청 바: 처음부터 끝까지 항상 보이게 (2026-11-12 대표 요청) */}
+      <StickyCTA data={data} buttonClass="bg-[#41649b] hover:bg-[#365584]" widthClass="max-w-[1040px]" />
     </main>
   );
 }
