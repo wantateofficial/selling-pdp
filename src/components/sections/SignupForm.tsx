@@ -24,6 +24,8 @@ interface Props {
   placement?: 'hero' | 'bottom';
   /** true 면 제목과 테두리 상자 없이 입력칸과 버튼만 보여준다 (첫 화면용) */
   compact?: boolean;
+  /** true 면 버튼을 처음부터 진한 색으로 두고, 빈칸으로 누르면 안내 문구를 띄운다 (2기 데모 전용) */
+  alwaysActive?: boolean;
 }
 
 /** 010-1234-5678 / 01012345678 등 허용. 숫자 10~11자리면 통과. */
@@ -31,10 +33,11 @@ function isValidPhone(v: string): boolean {
   return /^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(v.trim());
 }
 
-export function SignupForm({ data, placement = 'bottom', compact = false }: Props) {
+export function SignupForm({ data, placement = 'bottom', compact = false, alwaysActive = false }: Props) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
+  const [hint, setHint] = useState(false);
   const leadSent = useRef(false);
   const inFlight = useRef(false); // 빠른 연속 클릭으로 같은 신청이 두 번 저장되지 않게
 
@@ -43,7 +46,11 @@ export function SignupForm({ data, placement = 'bottom', compact = false }: Prop
   const canSubmit = name.trim().length >= 2 && isValidPhone(phone) && state !== 'sending';
 
   const submit = async () => {
-    if (!canSubmit || inFlight.current) return;
+    if (!canSubmit || inFlight.current) {
+      if (state !== 'sending') setHint(true);
+      return;
+    }
+    setHint(false);
     inFlight.current = true;
     const payload = {
       name: name.trim(),
@@ -158,11 +165,17 @@ export function SignupForm({ data, placement = 'bottom', compact = false }: Prop
         </p>
       )}
 
+      {alwaysActive && hint && !canSubmit && (
+        <p className="mt-3 text-xs font-semibold text-red-500">
+          {name.trim().length < 2 ? '이름을 입력해 주세요.' : '연락처를 010-1234-5678 형식으로 입력해 주세요.'}
+        </p>
+      )}
+
       <button
         type="button"
         onClick={submit}
-        disabled={!canSubmit}
-        className="mt-4 w-full rounded-xl border-2 border-sc-outline bg-sc-blue py-4 text-lg font-extrabold text-white shadow-pixel transition-all duration-150 hover:-translate-y-0.5 hover:bg-sc-blue-dark active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+        disabled={alwaysActive ? state === 'sending' : !canSubmit}
+        className={`mt-4 w-full rounded-xl border-2 border-sc-outline ${alwaysActive ? 'bg-[#41649b] hover:bg-[#365584]' : 'bg-sc-blue hover:bg-sc-blue-dark'} py-4 text-lg font-extrabold text-white shadow-pixel transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
       >
         {state === 'sending' ? '접수 중…' : '회원가입 없이 무료 신청하기'}
       </button>

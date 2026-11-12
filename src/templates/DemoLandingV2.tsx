@@ -111,7 +111,18 @@ function Hero({ data }: { data: CourseData }) {
               {basics.cohort ?? '2기'} 무료 데모강의
             </p>
             <h1 className="mb-8 text-[28px] font-extrabold leading-[1.3] tracking-tight md:mb-10 md:text-[46px] md:leading-[1.25]">
-              <span className="block">{line1}</span>
+              {/* "촬영, 얼굴 노출 NO!" 는 주황 박스 위 흰 글씨로 강조 (2026-11-12 대표 요청) */}
+              <span className="mb-1.5 flex flex-wrap gap-x-2 gap-y-1.5 md:mb-2">
+                {line1.split(/,\s*/).map((part, i, arr) => (
+                  <span
+                    key={part}
+                    className="inline-block bg-sc-orange px-2 pb-0.5 leading-[1.25] text-white md:px-3"
+                  >
+                    {part}
+                    {i < arr.length - 1 ? ',' : ''}
+                  </span>
+                ))}
+              </span>
               {rest.length > 0 &&
                 // "~할 수 있는" 뒤에서 줄을 나누고, "할 수 있는"은 붙여 둔다
                 rest
@@ -140,7 +151,7 @@ function Hero({ data }: { data: CourseData }) {
           <div>
             <p className="mb-4 text-[15px] font-bold md:text-[16px]">다시 보기 없이 라이브로만 진행해요.</p>
             <div id="signup-top">
-              <SignupForm data={data} placement="hero" compact />
+              <SignupForm data={data} placement="hero" compact alwaysActive />
             </div>
             <p className="mt-3 text-[13px] text-sc-outline/50">신청하면 카카오톡으로 강의 링크를 보내드려요.</p>
           </div>
@@ -376,7 +387,7 @@ function BottomSignup({ data }: { data: CourseData }) {
           라이브에서 만나요
         </Heading>
         <div className="mt-10 w-full max-w-[440px]">
-          <SignupForm data={data} placement="bottom" />
+          <SignupForm data={data} placement="bottom" alwaysActive />
         </div>
         {data.notice.length > 0 && (
           <ul className="mt-10 max-w-[520px] space-y-1 text-xs leading-relaxed text-white/55">
