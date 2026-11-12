@@ -107,9 +107,15 @@ function Hero({ data }: { data: CourseData }) {
         <SaturdayClubLogo className="mb-10 md:mb-16" />
         <div className="grid items-end gap-10 md:grid-cols-[1fr_400px] md:gap-20">
           <div>
-            <p className="mb-3 text-[15px] font-bold text-sc-orange md:text-[17px]">
-              {basics.cohort ?? '2기'} 무료 데모강의
-            </p>
+            {/* 상단 배지는 이전 버전 모양 그대로 (2026-11-12 대표 요청) */}
+            <div className="mb-4 flex flex-wrap items-center gap-2 md:mb-5">
+              <span className="rounded-full border-2 border-sc-outline bg-sc-orange px-3 py-1 text-sm font-extrabold text-white shadow-pixel-sm">
+                {basics.cohort ?? '2기'} 모집
+              </span>
+              <span className="rounded-full border-2 border-sc-outline bg-white px-3 py-1 text-sm font-bold text-sc-blue">
+                무료 데모강의
+              </span>
+            </div>
             <h1 className="mb-8 text-[28px] font-extrabold leading-[1.3] tracking-tight md:mb-10 md:text-[46px] md:leading-[1.25]">
               {/* "촬영, 얼굴 노출 NO!" 한 줄 전체를 주황 박스 하나로 감싸고 흰 글씨 (2026-11-12 대표 요청) */}
               <span className="mb-1.5 inline-block whitespace-nowrap bg-sc-orange px-2 pb-0.5 leading-[1.25] text-white md:mb-2 md:px-3">
