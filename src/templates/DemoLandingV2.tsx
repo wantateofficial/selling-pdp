@@ -111,17 +111,9 @@ function Hero({ data }: { data: CourseData }) {
               {basics.cohort ?? '2기'} 무료 데모강의
             </p>
             <h1 className="mb-8 text-[28px] font-extrabold leading-[1.3] tracking-tight md:mb-10 md:text-[46px] md:leading-[1.25]">
-              {/* "촬영, 얼굴 노출 NO!" 는 주황 박스 위 흰 글씨로 강조 (2026-11-12 대표 요청) */}
-              <span className="mb-1.5 flex flex-wrap gap-x-2 gap-y-1.5 md:mb-2">
-                {line1.split(/,\s*/).map((part, i, arr) => (
-                  <span
-                    key={part}
-                    className="inline-block bg-sc-orange px-2 pb-0.5 leading-[1.25] text-white md:px-3"
-                  >
-                    {part}
-                    {i < arr.length - 1 ? ',' : ''}
-                  </span>
-                ))}
+              {/* "촬영, 얼굴 노출 NO!" 한 줄 전체를 주황 박스 하나로 감싸고 흰 글씨 (2026-11-12 대표 요청) */}
+              <span className="mb-1.5 inline-block whitespace-nowrap bg-sc-orange px-2 pb-0.5 leading-[1.25] text-white md:mb-2 md:px-3">
+                {line1}
               </span>
               {rest.length > 0 &&
                 // "~할 수 있는" 뒤에서 줄을 나누고, "할 수 있는"은 붙여 둔다
