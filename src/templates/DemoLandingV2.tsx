@@ -284,39 +284,38 @@ function Curriculum({ data }: { data: CourseData }) {
 }
 
 /* ───────── 6. 참여 혜택: 전자책 ───────── */
-/** 전자책 표지 (이미지 파일 없이 화면에서 그린 책 모양) */
+/** 전자책 표지 정면 목업 (2026-11-12 대표 확정 디자인 B). 스타일은 globals.css 의 .ebook */
 function EbookCover() {
+  // 표지 휴대폰 순서: 왼쪽 염색제, 가운데 카매트, 오른쪽 고데기. 조회수는 실적 데이터에서 "약 " 을 뗀 값
+  const [carmat, bubbledye, hairiron] = PROOF_TOP4;
+  const phones = [
+    { item: bubbledye, cls: 'ebook-p1' },
+    { item: carmat, cls: 'ebook-p2' },
+    { item: hairiron, cls: 'ebook-p3' },
+  ];
   return (
-    <div className="relative mx-auto w-[200px] md:w-[260px]" aria-label="쇼핑숏폼 왕초보 가이드 전자책 표지">
-      {/* 바닥 그림자 */}
-      <div className="absolute -bottom-3 left-4 right-0 h-6 rounded-[50%] bg-black/20 blur-md" aria-hidden />
-      {/* 뒤쪽 종이 두께 */}
-      <div className="absolute inset-y-1 -right-1.5 left-2 rounded-r-[3px] bg-[#e9e2cf]" aria-hidden />
-      <div className="absolute inset-y-2 -right-3 left-3 rounded-r-[3px] bg-[#ddd5bf]" aria-hidden />
-      {/* 표지 */}
-      <div className="relative flex aspect-[3/4] flex-col overflow-hidden rounded-r-[3px] bg-sc-outline text-sc-cream">
-        {/* 책등 */}
-        <div
-          className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/45 via-white/10 to-transparent"
-          aria-hidden
-        />
-        <div className="flex flex-1 flex-col px-6 pb-5 pt-6 md:px-7 md:pt-8">
-          <p className="text-[10px] font-bold text-sc-cream/60 md:text-[11px]">데모강의 참여자용</p>
-          <div className="mt-4 h-1.5 w-10 bg-sc-orange" />
-          <p className="mt-4 text-[26px] font-extrabold leading-[1.2] md:text-[32px]">
+    <div className="ebook mx-auto" role="img" aria-label="쇼핑숏폼 왕초보 가이드 전자책 표지">
+      <div className="ebook-cover">
+        <div className="ebook-in">
+          <p className="ebook-kicker">촬영 없이, 얼굴 없이</p>
+          <p className="ebook-title">
             쇼핑숏폼
             <br />
             왕초보
             <br />
             가이드
           </p>
-          <p className="mt-auto text-[11px] leading-relaxed text-sc-cream/60 md:text-[12px]">
-            수익화 구조부터
-            <br />
-            후킹 멘트, 썸네일 문구까지
-          </p>
-          <p className="mt-3 text-[11px] font-bold md:text-[12px]">새러데이 랩</p>
+          <p className="ebook-brand">새러데이 랩</p>
         </div>
+        {phones.map(({ item, cls }) => (
+          <div key={item.name} className={`ebook-phone ${cls}`}>
+            <img src={item.poster} alt="" loading="lazy" />
+            <span className="ebook-views">
+              <small>조회수</small>
+              <b>{item.views.replace(/^약\s*/, '').replace(/회$/, '')}</b>
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
