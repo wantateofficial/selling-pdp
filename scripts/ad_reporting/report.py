@@ -139,7 +139,7 @@ def clarity_report():
     def show(row, field, suffix=''):
         value = row.get(field)
         return str(value) + suffix if value is not None else '확인 필요'
-    return ('Clarity(최근 24시간): 방문자 ' + show(traffic, 'distantUserCount', '명')
+    return ('Clarity(최근 24시간): 방문자 ' + show(traffic, 'distinctUserCount', '명')
             + ' · 평균 스크롤 ' + show(scroll, 'averageScrollDepth', '%')
             + ' · 과다 반복 클릭 ' + show(rage, 'subTotal', '회'))
 
