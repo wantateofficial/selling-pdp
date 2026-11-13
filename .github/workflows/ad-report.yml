@@ -2,7 +2,7 @@ name: Shopping short-form ad report
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0,7 * * *'
+    - cron: '7 0,7 * * *'
 permissions:
   contents: read
   id-token: write
