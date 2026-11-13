@@ -64,7 +64,7 @@ def summarize_meta(rows, placements):
     grouped = {}
     for row in placements:
         position = row.get('platform_position', 'unknown')
-        label = {'feed': '피드', 'story': '스토리', 'reels': '릴스'}.get(position, position)
+        label = {'feed': '피드', 'story': '스토리', 'reels': '릴스', 'instagram_stories': '스토리', 'instagram_reels': '릴스', 'threads_feed': '피드', 'instagram_explore_grid_home': '탐색 탭'}.get(position, position)
         platform = row.get('publisher_platform', 'unknown')
         key = (platform, label)
         n, c = grouped.get(key, (0, 0))
