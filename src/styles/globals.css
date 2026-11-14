@@ -121,3 +121,22 @@ body.exporting .no-export {
 .ebook-p1 { left: 3em;    bottom: -3em; transform: rotate(-8deg); }
 .ebook-p2 { left: 11.2em; bottom: -1em; z-index: 2; }
 .ebook-p3 { left: 19.4em; bottom: -3em; transform: rotate(8deg); }
+
+/* ── 전자책 2: 왕초보를 위한 스레드 쿠파스 첫걸음 (2026-11-15) ──
+   책 1(.ebook)과 같은 크기 체계. 스레드 앱의 흑백 톤을 따르되 로고는 쓰지 않는다. */
+.ebook-cover.th { background: #101010; }
+.th .ebook-kicker { color: #9a9a9a; opacity: 1; }
+.th .ebook-title { font-size: 3.4em; }
+.th .ebook-brand { color: #fff; }
+.th-post {
+  position: absolute; left: 3.4em; right: 2.6em; padding: 1.1em 1.2em; border-radius: 1.2em;
+  background: #1e1e1e; border: .08em solid #2e2e2e; box-shadow: 0 .8em 2em rgba(0,0,0,.35);
+  display: flex; gap: .9em; align-items: flex-start; color: #f3f3f3;
+}
+.th-post i { flex: none; width: 2.6em; height: 2.6em; border-radius: 50%; background: linear-gradient(135deg,#f5f5f5,#8a8a8a); }
+.th-post div { flex: 1; min-width: 0; }
+.th-post b { display: block; font-size: 1.05em; font-weight: 800; }
+.th-post span { display: block; margin-top: .3em; font-size: 1.15em; line-height: 1.35; font-weight: 600; }
+.th-post em { display: block; margin-top: .55em; font-style: normal; font-size: .9em; color: #8d8d8d; letter-spacing: .02em; }
+.th-p1 { top: 18.2em; }
+.th-p2 { top: 27.6em; left: 5.2em; right: 1.2em; transform: rotate(-3deg); }

@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{--sc-outline:#1a1a24;--sc-cream:#f9f1dc;--sc-blue:#4a6fa5;--sc-orange:#ff7a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,sans-serif;background:#999;padding:40px;display:flex;flex-wrap:wrap;gap:40px;letter-spacing:-.02em}
+.ad{position:relative;overflow:hidden;flex:none}
+.f{width:1080px;height:1350px}.s{width:1080px;height:1920px}
+.cream{background:var(--sc-cream);color:var(--sc-outline)}.dark{background:#16182a;color:#fff}.blue{background:var(--sc-blue);color:#fff}
+.pad{position:absolute;inset:0;padding:96px 88px}
+.k{font-size:38px;font-weight:800}
+.h{font-size:104px;line-height:1.16;font-weight:900;letter-spacing:-.035em}
+.h.xl{font-size:132px}
+.sub{font-size:40px;font-weight:600;line-height:1.4;opacity:.75}
+.or{color:var(--sc-orange)}
+.mark{background:var(--sc-orange);color:#fff;padding:0 .12em}
+.foot{position:absolute;left:88px;right:88px;bottom:80px;display:flex;justify-content:space-between;align-items:flex-end;font-size:34px;font-weight:700}
+.btn{background:var(--sc-orange);color:#fff;font-weight:900;font-size:40px;padding:26px 40px;border:4px solid var(--sc-outline);box-shadow:8px 8px 0 var(--sc-outline)}
+.phone{position:absolute;width:420px;aspect-ratio:9/18;border-radius:56px;background:#111;padding:16px;box-shadow:0 40px 80px rgba(0,0,0,.35)}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:center 20%;border-radius:42px;display:block}
+.views{position:absolute;left:16px;right:16px;bottom:22%;background:rgba(17,17,17,.85);color:#fff;text-align:center;padding:18px 0;line-height:1.1}
+.views small{display:block;font-size:26px;opacity:.75;font-weight:600}.views b{font-size:64px;font-weight:900}
+.cmp{position:absolute;left:88px;right:88px}
+.cmp .lab{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:36px;font-weight:800;color:#fff}
+.cmp .lab span{padding:14px 20px}.cmp img{display:block;width:100%;margin-top:8px}
+.strike{text-decoration:line-through;opacity:.45;font-size:48px;font-weight:700}
+.price{font-size:240px;font-weight:900;line-height:1;letter-spacing:-.05em}
+.tag{display:inline-block;background:var(--sc-orange);color:#fff;font-weight:900;font-size:40px;padding:10px 22px}
+.ebook { position: relative; width: 30em; aspect-ratio: 3 / 4.2; font-size: 7.6px; color: #fff; }
+@media (min-width: 768px) { .ebook { font-size: 10px; } }
+.ebook::before {
+  content: ''; position: absolute; left: .6em; top: .5em; right: -.5em; bottom: -.5em;
+  border-radius: .2em .6em .6em .2em;
+  background: linear-gradient(90deg, #ebe4d2, #f6f1e4);
+  box-shadow: 0 1px 0 #d9d1bd inset, 1.8em 2.4em 3.6em -.8em rgba(40,30,10,.32), .4em .6em 1em rgba(40,30,10,.18);
+}
+.ebook-cover { position: absolute; inset: 0; overflow: hidden; border-radius: .2em .5em .5em .2em; background: var(--sc-orange); }
+.ebook-cover::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.26) 0, rgba(0,0,0,.08) .6em, rgba(255,255,255,.22) .9em,
+      rgba(255,255,255,0) 1.4em, rgba(0,0,0,.10) 1.6em, rgba(0,0,0,0) 2.6em),
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.06));
+}
+.ebook-in { position: absolute; inset: 0; padding: 3em 2.6em 0 3.4em; }
+.ebook-kicker { font-size: 1.2em; font-weight: 700; opacity: .85; }
+.ebook-title { margin-top: .24em; font-size: 4.2em; line-height: 1.1; font-weight: 900; letter-spacing: -.02em; }
+.ebook-brand { position: absolute; right: 2.2em; top: 2.9em; font-size: 1.1em; font-weight: 800; opacity: .9; }
+.ebook-phone {
+  position: absolute; width: 9.2em; aspect-ratio: 9 / 18; border-radius: 1.5em; background: #111; padding: .5em;
+  box-shadow: 0 1em 2.2em rgba(0,0,0,.25);
+}
+.ebook-phone img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; border-radius: 1.1em; display: block; }
+.ebook-views {
+  position: absolute; left: .5em; right: .5em; top: 64%; height: 17%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(17,17,17,.82); line-height: 1.15;
+}
+.ebook-views small { font-size: .85em; font-weight: 600; opacity: .75; }
+.ebook-views b { font-size: 1.5em; font-weight: 900; letter-spacing: -.01em; }
+.ebook-p1 { left: 3em;    bottom: -3em; transform: rotate(-8deg); }
+.ebook-p2 { left: 11.2em; bottom: -1em; z-index: 2; }
+.ebook-p3 { left: 19.4em; bottom: -3em; transform: rotate(8deg); }
+
+/* ── 전자책 2: 왕초보를 위한 스레드 쿠파스 첫걸음 (2026-11-15) ──
+   책 1(.ebook)과 같은 크기 체계. 스레드 앱의 흑백 톤을 따르되 로고는 쓰지 않는다. */
+.ebook-cover.th { background: #101010; }
+.th .ebook-kicker { color: #9a9a9a; opacity: 1; }
+.th .ebook-title { font-size: 3.4em; }
+.th .ebook-brand { color: #fff; }
+.th-post {
+  position: absolute; left: 3.4em; right: 2.6em; padding: 1.1em 1.2em; border-radius: 1.2em;
+  background: #1e1e1e; border: .08em solid #2e2e2e; box-shadow: 0 .8em 2em rgba(0,0,0,.35);
+  display: flex; gap: .9em; align-items: flex-start; color: #f3f3f3;
+}
+.th-post i { flex: none; width: 2.6em; height: 2.6em; border-radius: 50%; background: linear-gradient(135deg,#f5f5f5,#8a8a8a); }
+.th-post div { flex: 1; min-width: 0; }
+.th-post b { display: block; font-size: 1.05em; font-weight: 800; }
+.th-post span { display: block; margin-top: .3em; font-size: 1.15em; line-height: 1.35; font-weight: 600; }
+.th-post em { display: block; margin-top: .55em; font-style: normal; font-size: .9em; color: #8d8d8d; letter-spacing: .02em; }
+.th-p1 { top: 18.2em; }
+.th-p2 { top: 27.6em; left: 5.2em; right: 1.2em; transform: rotate(-3deg); }
+
+</style></head><body>
+<div class="ad f cream" id="D1_책2권_피드"><div class="pad"><p class="k or">무료 라이브 참여자 전원</p><p class="h" style="margin-top:20px">라이브만 들어도<br><span class="mark">전자책 2권</span></p><p class="sub" style="margin-top:28px">200만원 넘는 유료강의 2개를 듣고<br>직접 운영하며 정리했어요</p>
+<div style="position:absolute;left:170px;top:560px;transform:rotate(-6deg)"><div class="ebook" style="font-size:14px"><div class="ebook-cover"><div class="ebook-in"><p class="ebook-kicker">촬영 없이, 얼굴 없이</p><p class="ebook-title">쇼핑숏폼<br>왕초보<br>가이드</p><p class="ebook-brand">새러데이 랩</p></div>
+<div class="ebook-phone ebook-p1"><img src="/assets/reels/web/02-bubbledye.jpg"><span class="ebook-views"><small>조회수</small><b>13.9만</b></span></div>
+<div class="ebook-phone ebook-p2"><img src="/assets/reels/web/01-carmat.jpg"><span class="ebook-views"><small>조회수</small><b>16만</b></span></div>
+<div class="ebook-phone ebook-p3"><img src="/assets/reels/web/03-minihairiron.jpg"><span class="ebook-views"><small>조회수</small><b>2.6만</b></span></div></div></div></div><div style="position:absolute;left:520px;top:530px;transform:rotate(4deg)"><div class="ebook" style="font-size:14px"><div class="ebook-cover th"><div class="ebook-in"><p class="ebook-kicker">왕초보를 위한</p><p class="ebook-title">스레드<br>쿠파스 첫걸음</p><p class="ebook-brand">새러데이 랩</p></div>
+<div class="th-post th-p1"><i></i><div><b>saturday.lab</b><span>요즘 제일 많이 팔린 살림템 3개</span><em>답글 128 · 좋아요 2.4천</em></div></div>
+<div class="th-post th-p2"><i></i><div><b>saturday.lab</b><span>프로필 세팅부터 제품 고르기까지</span></div></div></div></div></div></div><div class="foot"><span>11월 18일(수) 밤 8시 30분<br>무료 온라인 라이브</span><span class="btn">무료 신청하기</span></div></div>
+<div class="ad f dark" id="D2_혼자서도_피드"><div class="pad"><p class="h">쇼핑숏폼,<br><span class="or">혼자서도</span><br>할 수 있게<br>정리했어요</p><p class="sub" style="margin-top:32px">무료 라이브 들으면<br>전자책 2권을 드려요</p>
+<div style="position:absolute;right:70px;top:430px;transform:rotate(6deg)"><div class="ebook" style="font-size:17px"><div class="ebook-cover"><div class="ebook-in"><p class="ebook-kicker">촬영 없이, 얼굴 없이</p><p class="ebook-title">쇼핑숏폼<br>왕초보<br>가이드</p><p class="ebook-brand">새러데이 랩</p></div>
+<div class="ebook-phone ebook-p1"><img src="/assets/reels/web/02-bubbledye.jpg"><span class="ebook-views"><small>조회수</small><b>13.9만</b></span></div>
+<div class="ebook-phone ebook-p2"><img src="/assets/reels/web/01-carmat.jpg"><span class="ebook-views"><small>조회수</small><b>16만</b></span></div>
+<div class="ebook-phone ebook-p3"><img src="/assets/reels/web/03-minihairiron.jpg"><span class="ebook-views"><small>조회수</small><b>2.6만</b></span></div></div></div></div></div><div class="foot"><span>11월 18일(수) 밤 8시 30분<br>무료 온라인 라이브</span><span class="btn">무료 신청하기</span></div></div>
+<div class="ad f dark" id="D3_조회수16만_피드"><div class="pad"><p class="h">얼굴 없이<br>올린 영상,<br><span class="or">조회수 16만</span></p><p class="sub" style="margin-top:30px">어떻게 만들었는지<br>무료 라이브에서<br>보여 드려요</p>
+<div class="phone" style="right:90px;top:250px;transform:rotate(5deg)"><img src="/assets/reels/web/01-carmat.jpg"><span class="views"><small>조회수</small><b>16만</b></span></div></div><div class="foot"><span>11월 18일(수) 밤 8시 30분<br>무료 온라인 라이브</span><span class="btn">무료 신청하기</span></div></div>
+<div class="ad s cream" id="D1_책2권_스토리"><div class="pad" style="padding-top:220px"><p class="k or">11월 18일(수) 무료 라이브</p><p class="h xl" style="margin-top:24px">라이브만 들어도<br><span class="mark">전자책 2권</span></p>
+<div style="position:absolute;left:120px;top:900px;transform:rotate(-6deg)"><div class="ebook" style="font-size:19px"><div class="ebook-cover"><div class="ebook-in"><p class="ebook-kicker">촬영 없이, 얼굴 없이</p><p class="ebook-title">쇼핑숏폼<br>왕초보<br>가이드</p><p class="ebook-brand">새러데이 랩</p></div>
+<div class="ebook-phone ebook-p1"><img src="/assets/reels/web/02-bubbledye.jpg"><span class="ebook-views"><small>조회수</small><b>13.9만</b></span></div>
+<div class="ebook-phone ebook-p2"><img src="/assets/reels/web/01-carmat.jpg"><span class="ebook-views"><small>조회수</small><b>16만</b></span></div>
+<div class="ebook-phone ebook-p3"><img src="/assets/reels/web/03-minihairiron.jpg"><span class="ebook-views"><small>조회수</small><b>2.6만</b></span></div></div></div></div><div style="position:absolute;left:530px;top:860px;transform:rotate(4deg)"><div class="ebook" style="font-size:19px"><div class="ebook-cover th"><div class="ebook-in"><p class="ebook-kicker">왕초보를 위한</p><p class="ebook-title">스레드<br>쿠파스 첫걸음</p><p class="ebook-brand">새러데이 랩</p></div>
+<div class="th-post th-p1"><i></i><div><b>saturday.lab</b><span>요즘 제일 많이 팔린 살림템 3개</span><em>답글 128 · 좋아요 2.4천</em></div></div>
+<div class="th-post th-p2"><i></i><div><b>saturday.lab</b><span>프로필 세팅부터 제품 고르기까지</span></div></div></div></div></div></div></div>
+<div class="ad s dark" id="D3_조회수16만_스토리"><div class="pad" style="padding-top:220px"><p class="h xl">얼굴 없이<br>올린 영상,<br><span class="or">조회수 16만</span></p>
+<div class="phone" style="left:300px;top:900px;width:460px"><img src="/assets/reels/web/01-carmat.jpg"><span class="views"><small>조회수</small><b>16만</b></span></div></div></div>
+<div class="ad f dark" id="C1_얼리버드_피드"><div class="pad"><p class="k">4주 실전 챌린지 2기</p><p class="h" style="margin-top:20px">쇼핑숏폼 노하우,<br>4주 동안 그대로</p>
+<div style="margin-top:110px"><span class="tag">얼리버드 선착순 10명</span><p class="strike" style="margin-top:40px">일반가 50만원</p><p class="price or">25만원</p><p class="sub" style="margin-top:24px">11월 19일(목) 밤 12시까지</p></div></div><div class="foot"><span>4주 실전 챌린지 2기<br>11월 22일(일) 시작</span><span class="btn">자세히 보기</span></div></div>
+<div class="ad f cream" id="C2_자막지우기_피드"><div class="pad"><p class="h">중국 영상 자막,<br><span class="mark">깨끗하게</span> 지워 줘요</p><p class="sub" style="margin-top:24px">챌린지 수강생 전용 에이전트<br>12월 31일까지 무료</p></div>
+<div class="cmp" style="top:560px"><div class="lab"><span style="background:#1a1a24">지우기 전</span><span style="background:#ff7a1a">지운 후</span></div><img src="/assets/agent/compare.jpg" style="height:560px;object-fit:cover"></div><div class="foot" style="bottom:60px"><span>4주 실전 챌린지 2기<br>11월 22일(일) 시작</span><span class="btn">자세히 보기</span></div></div>
+<div class="ad f blue" id="C3_리워드_피드"><div class="pad"><p class="k" style="opacity:.8">성적우수 리워드</p><p class="h" style="margin-top:20px">끝까지 올리면<br><span class="price" style="font-size:200px;display:block;margin-top:20px">10만원</span></p>
+<p class="sub" style="margin-top:40px;opacity:.85">완주한 상위 10%에게 드려요<br>100점 중 85점이 꾸준함 점수예요</p></div><div class="foot"><span>4주 실전 챌린지 2기<br>11월 22일(일) 시작</span><span class="btn">자세히 보기</span></div></div>
+<div class="ad s dark" id="C1_얼리버드_스토리"><div class="pad" style="padding-top:240px"><p class="k">4주 실전 챌린지 2기</p><p class="h" style="margin-top:24px;font-size:96px">쇼핑숏폼 노하우,<br>4주 동안 그대로</p><p class="strike" style="margin-top:160px;font-size:60px">일반가 50만원</p><p class="price or" style="font-size:300px">25만원</p>
+<p class="h" style="font-size:72px;margin-top:40px">11월 19일(목)까지<br>선착순 10명</p></div></div>
+<div class="ad s cream" id="C2_자막지우기_스토리"><div class="pad" style="padding-top:200px"><p class="h xl" style="font-size:112px">중국 영상 자막,<br><span class="mark">깨끗하게</span> 지워 줘요</p></div>
+<div class="cmp" style="top:720px"><div class="lab"><span style="background:#1a1a24">지우기 전</span><span style="background:#ff7a1a">지운 후</span></div><img src="/assets/agent/compare.jpg" style="height:900px;object-fit:cover"></div></div>
+</body></html>

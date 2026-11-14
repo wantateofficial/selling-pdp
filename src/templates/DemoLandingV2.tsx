@@ -40,7 +40,7 @@ const EBOOK_CONTENTS = [
 ];
 
 /** 섹션 공통 여백. PC에서 위아래를 넉넉히 둔다 */
-function Block({
+export function Block({
   id,
   name,
   tone = 'white',
@@ -59,7 +59,7 @@ function Block({
   );
 }
 
-function Heading({ children }: { children: ReactNode }) {
+export function Heading({ children }: { children: ReactNode }) {
   return (
     <h2 className="text-[26px] font-extrabold leading-snug tracking-tight md:text-[38px] md:leading-tight">
       {children}
@@ -160,7 +160,7 @@ function Hero({ data }: { data: CourseData }) {
 }
 
 /* ───────── 2. 강사 실제 조회수 ───────── */
-function Proof() {
+export function Proof() {
   return (
     <Block name="proof">
       <Heading>
@@ -189,7 +189,7 @@ function Proof() {
 }
 
 /* ───────── 3. 강사 소개 ───────── */
-function Instructor() {
+export function Instructor({ role = '데모강의 진행' }: { role?: string }) {
   const lines = [
     '연 매출 22억 부업 교육 플랫폼 전략기획 팀장',
     '창업부트캠프 총괄 PM',
@@ -208,7 +208,7 @@ function Instructor() {
               loading="lazy"
             />
             <div className="pb-1">
-              <p className="text-[13px] text-sc-outline/45">데모강의 진행</p>
+              <p className="text-[13px] text-sc-outline/45">{role}</p>
               <p className="mt-1 text-[22px] font-extrabold md:text-[28px]">{INSTRUCTOR.name} 강사</p>
               <p className="mt-0.5 text-[14px] font-semibold text-sc-outline/60 md:text-[15px]">
                 {INSTRUCTOR.title}
@@ -241,7 +241,7 @@ function Instructor() {
 }
 
 /* ───────── 4. 1기 결과와 후기 ───────── */
-function Cohort() {
+export function Cohort() {
   return (
     <Block name="reviews" tone="cream">
       <Heading>먼저 시작한 1기</Heading>
@@ -359,7 +359,7 @@ function Benefit() {
 }
 
 /* ───────── 7. 에스씨 (페이지 전체에서 한 번만) ───────── */
-function Mascot() {
+export function Mascot() {
   return (
     <section data-section="mascot" aria-hidden className="bg-white px-6 pb-2 pt-14 md:pt-24">
       <img
@@ -400,8 +400,8 @@ function BottomSignup({ data }: { data: CourseData }) {
 }
 
 /* ───────── 9. 자주 묻는 질문 ───────── */
-function Faq({ data }: { data: CourseData }) {
-  const items = data.faq.filter((f) => FAQ_KEEP.some((k) => f.q.includes(k)));
+export function Faq({ data, keep = FAQ_KEEP }: { data: CourseData; keep?: string[] }) {
+  const items = data.faq.filter((f) => keep.some((k) => f.q.includes(k)));
   if (items.length === 0) return null;
   return (
     <Block name="faq">

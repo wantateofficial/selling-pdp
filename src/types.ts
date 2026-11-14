@@ -1,5 +1,5 @@
 /** 라우팅 키. 템플릿은 마크다운의 '페이지 타입'(demo | challenge)으로 정한다. demo3·challenge2 = 2기. */
-export type PageType = 'demo' | 'demo2' | 'demo3' | 'challenge' | 'challenge2';
+export type PageType = 'demo' | 'demo2' | 'demo3' | 'demo4' | 'challenge' | 'challenge2';
 
 export interface CurriculumItem {
   /** 주차 라벨 (challenge: "1주차"), demo는 비움 */

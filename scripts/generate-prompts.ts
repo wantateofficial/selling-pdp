@@ -12,6 +12,7 @@ const SOURCES: Record<PageType, string> = {
   demo: 'content/shopping-shorts-demo.md',
   demo2: 'content/shopping-shorts-demo-0718.md',
   demo3: 'content/shopping-shorts-demo-1024.md',
+  demo4: 'content/shopping-shorts-demo-1118.md',
   challenge: 'content/shopping-shorts-challenge.md',
   challenge2: 'content/shopping-shorts-challenge-2.md',
 };

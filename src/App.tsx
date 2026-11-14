@@ -2,10 +2,13 @@ import { useMemo, useState, useEffect } from 'react';
 import demoMd from '../content/shopping-shorts-demo.md?raw';
 import demo2Md from '../content/shopping-shorts-demo-0718.md?raw';
 import demo3Md from '../content/shopping-shorts-demo-1024.md?raw';
+import demo4Md from '../content/shopping-shorts-demo-1118.md?raw';
 import challengeMd from '../content/shopping-shorts-challenge.md?raw';
 import challenge2Md from '../content/shopping-shorts-challenge-2.md?raw';
 import { normalizeCourseData } from './parser/normalizeCourseData';
 import { DemoLanding } from './templates/DemoLanding';
+import { DemoLandingV3 } from './templates/DemoLandingV3';
+import { ChallengeLandingV2 } from './templates/ChallengeLandingV2';
 import { DemoLandingV2 } from './templates/DemoLandingV2';
 import { ChallengeLanding } from './templates/ChallengeLanding';
 import { ContentProtection } from './components/system/ContentProtection';
@@ -15,6 +18,7 @@ const SOURCES: Record<PageType, { md: string; slug: string }> = {
   demo: { md: demoMd, slug: 'shopping-shorts-demo' },
   demo2: { md: demo2Md, slug: 'shopping-shorts-demo-0718' },
   demo3: { md: demo3Md, slug: 'shopping-shorts-demo-1024' },
+  demo4: { md: demo4Md, slug: 'shopping-shorts-demo-1118' },
   challenge: { md: challengeMd, slug: 'shopping-shorts-challenge' },
   challenge2: { md: challenge2Md, slug: 'shopping-shorts-challenge-2' },
 };
@@ -23,6 +27,7 @@ const TOGGLE: { key: PageType; label: string }[] = [
   { key: 'demo', label: '데모1 (7/9)' },
   { key: 'demo2', label: '데모2 (7/18)' },
   { key: 'demo3', label: '2기 데모 (11/14)' },
+  { key: 'demo4', label: '2기 2차 데모 (11/18)' },
   { key: 'challenge', label: '4주 챌린지' },
   { key: 'challenge2', label: '2기 챌린지' },
 ];
@@ -92,8 +97,14 @@ export default function App() {
         </div>
       )}
 
-      {data.pageType === 'challenge' ? (
+      {page === 'challenge2' ? (
+        // 2기 챌린지는 demo3와 같은 톤의 새 화면 (2026-11). 1기 challenge 는 기존 화면 그대로.
+        <ChallengeLandingV2 data={data} fixedWidth={isExport} />
+      ) : data.pageType === 'challenge' ? (
         <ChallengeLanding data={data} fixedWidth={isExport} />
+      ) : page === 'demo4' ? (
+        // 2기 2차 데모 (11/18). 전자책 2권, 셀링형 개편 (2026-11-15)
+        <DemoLandingV3 data={data} fixedWidth={isExport} />
       ) : page === 'demo3' ? (
         // 2기 데모는 광고 전환 개선판 전용 화면 (2026-11). 1기 demo, demo2 는 기존 화면 그대로.
         <DemoLandingV2 data={data} fixedWidth={isExport} />
