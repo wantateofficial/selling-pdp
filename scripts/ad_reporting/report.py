@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 import requests
 
 KST = ZoneInfo('Asia/Seoul')
+CHALLENGE_CAMPAIGN_ID = '120252386258560679'
 
 
 def required(name):
@@ -23,20 +24,22 @@ def request_json(url, **kw):
     return response.json()
 
 
-def meta_report():
+def meta_report(challenge=False):
     token = required('META_TOKEN')
     account = required('META_AD_ACCOUNT').removeprefix('act_')
     if not account.isdigit():
         raise ValueError('광고 계정 ID는 숫자여야 합니다')
-    ids = [x.strip() for x in required('META_CAMPAIGN_IDS').split(',') if x.strip()]
+    ids = ([CHALLENGE_CAMPAIGN_ID] if challenge else
+           [x.strip() for x in required('META_CAMPAIGN_IDS').split(',')
+            if x.strip() and x.strip() != CHALLENGE_CAMPAIGN_ID])
     if not ids or any(not x.isdigit() for x in ids):
         raise ValueError('캠페인 ID 설정을 확인하세요')
     version = required('META_API_VERSION')
     if not __import__('re').fullmatch(r'v\d+\.\d+', version):
         raise ValueError('Meta API 버전 설정을 확인하세요')
     url = f'https://graph.facebook.com/{version}/act_{account}/insights'
-    params = {'level': 'campaign', 'date_preset': 'today',
-              'fields': 'campaign_id,spend,impressions,inline_link_clicks,actions',
+    params = {'level': 'ad' if challenge else 'campaign', 'date_preset': 'today',
+              'fields': 'campaign_id,spend,impressions,inline_link_clicks,actions' + (',ad_id,ad_name' if challenge else ''),
               'filtering': json.dumps([{'field': 'campaign.id', 'operator': 'IN', 'value': ids}]),
               'limit': 100}
     headers = {'Authorization': 'Bearer ' + token}
@@ -53,6 +56,8 @@ def meta_report():
                 raise ValueError('Meta 페이지 주소가 올바르지 않습니다')
             response = request_json(next_url, headers=headers)
     rows = fetch(params)
+    if challenge:
+        return summarize_challenge(rows)
     placements = fetch({**params, 'breakdowns': 'publisher_platform,platform_position'})
     return summarize_meta(rows, placements)
 
@@ -92,6 +97,39 @@ def summarize_meta(rows, placements):
         lines.append('지면별 링크 클릭률: 데이터 없음')
     # Meta-reported conversion results and sheet submissions are distinct.
     return lines, spend
+
+
+def summarize_challenge(rows):
+    lines = ['[챌린지 2기 · 오늘]']
+    if not rows:
+        return lines + ['집계 데이터 없음 — 게재 전 또는 집계 지연일 수 있습니다. 성과 판단을 보류합니다.']
+    def metrics(items):
+        spend = sum(float(x.get('spend', 0)) for x in items)
+        impressions = sum(int(x.get('impressions', 0)) for x in items)
+        clicks = sum(int(x.get('inline_link_clicks', 0)) for x in items)
+        views = [int(a.get('value', 0)) for x in items for a in x.get('actions', [])
+                 if a.get('action_type') == 'landing_page_view']
+        cpc = f'{spend/clicks:,.0f}원' if clicks else '계산 불가'
+        text = f'지출 {spend:,.0f}원 · 노출 {impressions:,}회 · 링크 클릭 {clicks:,}회 · CTR {pct(clicks, impressions)} · CPC {cpc}'
+        if views:
+            n = sum(views)
+            cost = f'{spend/n:,.0f}원' if n else '계산 불가'
+            text += f' · 랜딩 조회 {n:,}회 · 조회당 {cost}'
+        else:
+            text += ' · 랜딩 조회: 확인 필요'
+        return text
+    lines.append('전체: ' + metrics(rows))
+    grouped = {}
+    for row in rows:
+        key = row.get('ad_id') or row.get('ad_name', '이름 미확인')
+        grouped.setdefault(key, []).append(row)
+    labels = {'ch2_offer': '얼리버드 25만원', 'ch2_cohort': '1기 결과', 'ch2_reward': '리워드 10만원'}
+    for key, items in grouped.items():
+        name = items[0].get('ad_name', key)
+        label = labels.get(name, name)
+        lines.append(f'• {label} ({name}): ' + metrics(items))
+    lines.append('광고별 수치는 데이터가 있는 광고만 표시합니다. 결제 건수·매출·ROAS는 별도 결제 추적 확인이 필요합니다.')
+    return lines
 
 
 def pct(count, impressions):
@@ -150,6 +188,7 @@ def main():
     if parsed.scheme != 'https' or parsed.hostname != 'hooks.slack.com' or not parsed.path.startswith('/services/'):
         raise ValueError('Slack 웹후크 주소가 올바르지 않습니다')
     lines = ['[쇼핑숏폼 광고 리포트]', datetime.now(KST).strftime('기준: %Y-%m-%d %H:%M KST')]
+    lines.append('[기존 데모 광고 · 오늘]')
     spend = None
     try:
         meta, spend = meta_report(); lines += meta
@@ -162,7 +201,11 @@ def main():
     except Exception as e:
         lines.append('시트 신청: 조회 실패 (' + type(e).__name__ + ')')
     try:
-        lines.append(clarity_report())
+        lines += meta_report(challenge=True)
+    except Exception as e:
+        lines.append('챌린지 2기: 조회 실패 (' + type(e).__name__ + ')')
+    try:
+        lines.append('사이트 전체 참고 지표 · ' + clarity_report())
     except Exception as e:
         lines.append('Clarity: 조회 실패 (' + type(e).__name__ + ')')
     response = requests.post(webhook, json={'text': '\n'.join(lines)}, timeout=30)
