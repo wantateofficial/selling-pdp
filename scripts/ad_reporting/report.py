@@ -57,7 +57,7 @@ def meta_report(challenge=False):
             response = request_json(next_url, headers=headers)
     rows = fetch(params)
     if challenge:
-        return summarize_challenge(rows)
+        return summarize_challenge(rows, fetch({**params, 'breakdowns': 'publisher_platform,platform_position'}))
     placements = fetch({**params, 'breakdowns': 'publisher_platform,platform_position'})
     return summarize_meta(rows, placements)
 
@@ -99,7 +99,7 @@ def summarize_meta(rows, placements):
     return lines, spend
 
 
-def summarize_challenge(rows):
+def summarize_challenge(rows, placements):
     lines = ['[챌린지 2기 · 오늘]']
     if not rows:
         return lines + ['집계 데이터 없음 — 게재 전 또는 집계 지연일 수 있습니다. 성과 판단을 보류합니다.']
@@ -118,7 +118,7 @@ def summarize_challenge(rows):
         else:
             text += ' · 랜딩 조회: 확인 필요'
         return text
-    lines.append('전체: ' + metrics(rows))
+    lines.append('전체: ' + metrics(rows)); lines.append(summarize_meta(rows, placements)[0][-1]); lines.append('결제 건수/건당 비용: 확인 필요 (스마트스토어 결제 추적 확인 필요)')
     grouped = {}
     for row in rows:
         key = row.get('ad_id') or row.get('ad_name', '이름 미확인')
