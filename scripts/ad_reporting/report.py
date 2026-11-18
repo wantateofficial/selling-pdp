@@ -201,7 +201,7 @@ def main():
     except Exception as e:
         lines.append('시트 신청: 조회 실패 (' + type(e).__name__ + ')')
     try:
-        lines += meta_report(challenge=True)
+        lines[:] = lines[:2] if datetime.now(KST).date().isoformat() >= '2026-11-19' else lines; lines += meta_report(challenge=True)
     except Exception as e:
         lines.append('챌린지 2기: 조회 실패 (' + type(e).__name__ + ')')
     try:
